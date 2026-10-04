@@ -1,6 +1,6 @@
 /**
  * MODULE: HIỆU ỨNG TRÁI TIM BAY LÃNG MẠN (FLOATING HEARTS CANVAS)
- * Tông màu: Đỏ tươi rực rỡ & Hồng ngọt ngào
+ * Tông màu: Xanh pastel, Xanh da trời & Xanh ngọc dịu êm
  */
 
 function initFloatingHearts() {
@@ -19,14 +19,14 @@ function initFloatingHearts() {
   const TOTAL_HEARTS = Math.min(Math.floor(width / 32), 30);
   const hearts = [];
 
-  // Bảng màu: Đỏ tươi & Hồng tình yêu
+  // Bảng màu: Xanh da trời & Xanh pastel lãng mạn
   const heartColors = [
-    "rgba(239, 68, 68, 0.85)",   // Đỏ tươi rực rỡ
-    "rgba(220, 38, 38, 0.8)",    // Đỏ ruby nồng thắm
-    "rgba(244, 63, 94, 0.85)",   // Hồng dâu ngọt ngào
-    "rgba(236, 72, 153, 0.8)",   // Hồng sen tươi
-    "rgba(251, 113, 133, 0.85)", // Hồng san hô
-    "rgba(253, 164, 175, 0.8)"   // Hồng phấn lãng mạn
+    "rgba(2, 132, 199, 0.85)",   // Xanh Sky 600 đậm nét
+    "rgba(14, 165, 233, 0.85)",  // Xanh Sky 500 tươi sáng
+    "rgba(56, 189, 248, 0.85)",  // Xanh Sky 400 trong trẻo
+    "rgba(125, 211, 252, 0.9)",  // Xanh Sky 300 pastel
+    "rgba(37, 99, 235, 0.75)",   // Xanh Blue 600 thanh lịch
+    "rgba(186, 230, 253, 0.95)"  // Xanh băng tuyết dịu mát
   ];
 
   class FloatingHeart {
