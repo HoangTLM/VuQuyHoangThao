@@ -1,0 +1,104 @@
+/**
+ * ANIMATIONS & KEYFRAMES
+ */
+
+/* 1. Hiệu ứng đĩa than quay tròn */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.spin-paused {
+  animation-play-state: paused !important;
+}
+
+/* 2. Hiệu ứng nhịp đập trái tim */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.2); }
+  70% { transform: scale(1); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* 3. Hiệu ứng trôi bồng bềnh (Floating) */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* 4. Hiệu ứng ánh kim lấp lánh (Shimmer) */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #b38728 0%, #fbf5b7 25%, #da9f38 50%, #aa771c 75%, #e1b452 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s linear infinite;
+}
+
+/* 5. Hiệu ứng phong bì thư mở ra */
+.envelope-wrapper {
+  perspective: 1200px;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.envelope-wrapper.opened {
+  transform: translateY(-100vh) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.envelope-flap {
+  transform-origin: top;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.envelope-wrapper.opening .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+/* 6. Hiệu ứng mở modal phóng to ảnh */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-zoom {
+  animation: zoomIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

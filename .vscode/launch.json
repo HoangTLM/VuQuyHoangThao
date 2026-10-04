@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🚀 Chạy Thiệp Cưới (Microsoft Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "file": "${workspaceFolder}/index.html"
+    },
+    {
+      "name": "🌐 Chạy Thiệp Cưới (Google Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "file": "${workspaceFolder}/index.html"
+    },
+    {
+      "name": "💌 Test Link Mời Cá Nhân (?to=Anh+Minh+Hoang)",
+      "type": "msedge",
+      "request": "launch",
+      "file": "${workspaceFolder}/index.html"
+    },
+    {
+      "name": "⚡ Chạy qua Local Web Server (Port 3000)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "Khởi động Local Server"
+    }
+  ]
+}

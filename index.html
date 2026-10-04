@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thiệp Mời Cưới - Vi Thảo & Minh Hoàng</title>
+  
+  <!-- Open Graph / Meta Preview cho Zalo & Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Thiệp Mời Cưới - Vi Thảo & Minh Hoàng">
+  <meta property="og:description" content="Trân trọng kính mời bạn đến chung vui trong ngày trọng đại của chúng mình!">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- AOS (Animate On Scroll) CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#f0f7fd] text-neutral-800 antialiased selection:bg-sky-100 selection:text-sky-900">
+
+  <!-- Thanh Tiến Độ Cuộn Trang -->
+  <div id="scroll-progress-bar"></div>
+
+  <!-- Canvas Cánh Hoa Rơi -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- ========================================================================= -->
+  <!-- MÀN HÌNH CHÀO & PHONG BÌ THƯ (ENVELOPE SCREEN) - LIGHT BLUE               -->
+  <!-- ========================================================================= -->
+  <div id="envelope-screen">
+    <div class="max-w-md w-full mx-4 text-center">
+      <!-- Phong bì thư 3D tương tác -->
+      <div id="envelope-box" class="relative bg-white rounded-3xl p-8 shadow-2xl border border-sky-200/80 wedding-card transform transition-all duration-700">
+        <!-- Huy hiệu trái tim niêm phong -->
+        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-600 to-sky-400 text-white flex items-center justify-center mx-auto mb-4 shadow-lg shadow-sky-500/20 animate-heartbeat">
+          <i data-lucide="heart" class="w-8 h-8 fill-current"></i>
+        </div>
+
+        <p class="font-script text-4xl text-sky-700 mb-1">Lễ Vu Quy</p>
+        <h2 class="font-serif-title text-2xl font-bold tracking-wide text-neutral-800 mb-3">Vi Thảo & Minh Hoàng</h2>
+
+        <div class="h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent my-4"></div>
+
+        <!-- Lời mời cá nhân hóa trên phong bì -->
+        <p id="envelope-guest-name" class="text-sm font-medium text-sky-900 bg-sky-50 py-2 px-4 rounded-full inline-block border border-sky-200 mb-6">
+          Kính gửi: Quý Khách Mời
+        </p>
+
+        <div>
+          <button id="btn-open-invitation" class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white font-semibold text-base shadow-lg shadow-sky-600/25 active:scale-95 transition flex items-center justify-center gap-2">
+            <i data-lucide="mail-open" class="w-5 h-5"></i>
+            <span>Mở Thiệp Mời</span>
+          </button>
+        </div>
+      </div>
+      <p class="text-xs text-neutral-400 mt-4">Chạm để mở thiệp và thưởng thức giai điệu cưới lãng mạn</p>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- NÚT ĐĨA THAN PHÁT NHẠC NỔI GÓC DƯỚI (FLOATING MUSIC PLAYER)               -->
+  <!-- ========================================================================= -->
+  <div id="music-disc-btn" class="music-disc-btn group" title="Bật / Tắt nhạc">
+    <div id="music-disc-img" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-neutral-900 border-2 border-sky-400 shadow-xl flex items-center justify-center text-sky-400 spin-paused">
+      <div class="w-4 h-4 rounded-full bg-sky-200 border border-neutral-900 flex items-center justify-center">
+        <div class="w-1.5 h-1.5 rounded-full bg-neutral-900"></div>
+      </div>
+    </div>
+    <span class="absolute left-16 top-1/2 -translate-y-1/2 bg-neutral-900 text-white text-xs px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none shadow">
+      Âm Nhạc
+    </span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 1: HERO BANNER (MÀN HÌNH CHÍNH)                                   -->
+  <!-- ========================================================================= -->
+  <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+    <!-- Ảnh nền lãng mạn -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85" 
+           alt="Ảnh cưới" 
+           class="w-full h-full object-cover object-center filter brightness-[0.78]" />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#f0f7fd]"></div>
+    </div>
+
+    <!-- Nội dung Text Hero -->
+    <div class="relative z-10 max-w-2xl mx-auto text-white pt-16 pb-24" data-aos="fade-up" data-aos-duration="1200">
+      <p class="font-script text-3xl md:text-5xl text-sky-200 mb-2 drop-shadow">Save Our Date</p>
+      
+      <h1 class="font-serif-title text-4xl md:text-6xl font-extrabold tracking-wide my-4 leading-tight drop-shadow-md">
+        <span id="bride-name-hero">Vi Thảo</span>
+        <span class="text-sky-300 font-script text-4xl md:text-6xl mx-2">&</span>
+        <span id="groom-name-hero">Minh Hoàng</span>
+      </h1>
+
+      <div class="ornament-divider my-4">
+        <i data-lucide="sparkles" class="w-4 h-4 text-sky-300"></i>
+      </div>
+
+      <!-- Tên khách mời cá nhân hóa -->
+      <div id="personalized-guest-name" class="hidden inline-block bg-white/20 backdrop-blur-md border border-white/40 text-sky-100 px-6 py-2 rounded-full text-sm md:text-base font-medium mb-6 drop-shadow">
+        Trân trọng kính mời: Quý Khách Mời
+      </div>
+
+      <div class="space-y-1 drop-shadow">
+        <p id="wedding-date-solar" class="text-lg md:text-xl font-semibold tracking-wider text-neutral-100">Thứ Hai, ngày 28 tháng 12 năm 2026</p>
+        <p id="wedding-date-lunar" class="text-xs md:text-sm text-neutral-300 italic">Ngày 20 tháng 11 năm Bính Ngọ (Âm lịch)</p>
+      </div>
+
+      <div class="mt-8">
+        <a href="#events" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-sky-600/90 hover:bg-sky-600 text-white text-sm font-semibold backdrop-blur-sm transition shadow-lg animate-float">
+          <span>Xem Thông Tin Lễ Cưới</span>
+          <i data-lucide="chevron-down" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 2: GIỚI THIỆU CÔ DÂU & CHÚ RỂ                                    -->
+  <!-- ========================================================================= -->
+  <section class="py-20 px-4 max-w-5xl mx-auto">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="font-script text-3xl text-sky-700">Bride & Groom</p>
+      <h2 class="font-serif-title text-3xl md:text-4xl font-bold text-neutral-800 tracking-wide mt-1">Đôi Uyên Ương</h2>
+      <div class="ornament-divider my-3">
+        <i data-lucide="heart" class="w-4 h-4 fill-sky-700 text-sky-700"></i>
+      </div>
+      <p id="invitation-message" class="max-w-xl mx-auto text-neutral-600 text-sm md:text-base leading-relaxed px-4">
+        Tình yêu không phải là tìm một người hoàn hảo, mà là học cách nhìn một người không hoàn hảo theo cách hoàn hảo nhất.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center">
+      <!-- CÔ DÂU (Slide từ trái) -->
+      <div class="wedding-card rounded-3xl p-8 text-center" data-aos="fade-right" data-aos-duration="900">
+        <div class="relative w-44 h-44 md:w-52 md:h-52 mx-auto rounded-full overflow-hidden p-1.5 border-2 border-sky-300 shadow-xl mb-6 group">
+          <img id="bride-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80" 
+               alt="Cô Dâu" class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110" />
+        </div>
+        <span class="text-xs uppercase tracking-widest text-sky-700 font-bold bg-sky-100 py-1 px-3 rounded-full">Cô Dâu</span>
+        <h3 id="bride-fullname" class="text-2xl font-bold font-serif-title text-neutral-800 mt-3 mb-1">Trần Vi Thảo</h3>
+        <p id="bride-parents" class="text-xs text-neutral-500 mb-4">Ông Trần Văn Hùng & Bà Phạm Thị Lan</p>
+        <p id="bride-desc" class="text-neutral-600 text-sm leading-relaxed italic">
+          Một cô gái dịu dàng, nụ cười rạng rỡ, luôn tin vào những điều kỳ diệu và bình yên bên người mình yêu.
+        </p>
+      </div>
+
+      <!-- CHÚ RỂ (Slide từ phải) -->
+      <div class="wedding-card rounded-3xl p-8 text-center" data-aos="fade-left" data-aos-duration="900">
+        <div class="relative w-44 h-44 md:w-52 md:h-52 mx-auto rounded-full overflow-hidden p-1.5 border-2 border-sky-300 shadow-xl mb-6 group">
+          <img id="groom-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" 
+               alt="Chú Rể" class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110" />
+        </div>
+        <span class="text-xs uppercase tracking-widest text-sky-700 font-bold bg-sky-100 py-1 px-3 rounded-full">Chú Rể</span>
+        <h3 id="groom-fullname" class="text-2xl font-bold font-serif-title text-neutral-800 mt-3 mb-1">Nguyễn Minh Hoàng</h3>
+        <p id="groom-parents" class="text-xs text-neutral-500 mb-4">Ông Nguyễn Văn Thành & Bà Lê Thị Mai</p>
+        <p id="groom-desc" class="text-neutral-600 text-sm leading-relaxed italic">
+          Một chàng trai chân thành, luôn yêu thương và sẵn sàng bảo vệ người bạn đời của mình trên mọi chặng đường.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 3: ĐỒNG HỒ ĐẾM NGƯỢC (COUNTDOWN TIMER)                            -->
+  <!-- ========================================================================= -->
+  <section class="py-16 px-4 bg-gradient-to-b from-[#f0f7fd] via-sky-50/50 to-[#f0f7fd]">
+    <div class="max-w-4xl mx-auto text-center" data-aos="zoom-in" data-aos-duration="800">
+      <p class="font-script text-3xl text-sky-700">Counting Down</p>
+      <h2 id="cd-banner-text" class="font-serif-title text-2xl md:text-3xl font-bold text-neutral-800 tracking-wide mt-1 mb-8">
+        Cùng Đếm Ngược Đến Ngày Chung Đôi
+      </h2>
+
+      <!-- Các ô số đếm ngược -->
+      <div class="grid grid-cols-4 gap-3 md:gap-6 max-w-lg mx-auto">
+        <div class="wedding-card rounded-2xl p-4 md:p-6 text-center border-t-4 border-sky-600">
+          <span id="cd-days" class="block font-mono text-3xl md:text-5xl font-extrabold text-sky-700">00</span>
+          <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-500 mt-1 block">Ngày</span>
+        </div>
+        <div class="wedding-card rounded-2xl p-4 md:p-6 text-center border-t-4 border-sky-600">
+          <span id="cd-hours" class="block font-mono text-3xl md:text-5xl font-extrabold text-sky-700">00</span>
+          <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-500 mt-1 block">Giờ</span>
+        </div>
+        <div class="wedding-card rounded-2xl p-4 md:p-6 text-center border-t-4 border-sky-600">
+          <span id="cd-minutes" class="block font-mono text-3xl md:text-5xl font-extrabold text-sky-700">00</span>
+          <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-500 mt-1 block">Phút</span>
+        </div>
+        <div class="wedding-card rounded-2xl p-4 md:p-6 text-center border-t-4 border-sky-600">
+          <span id="cd-seconds" class="block font-mono text-3xl md:text-5xl font-extrabold text-blue-600">00</span>
+          <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-500 mt-1 block">Giây</span>
+        </div>
+      </div>
+
+      <p id="wedding-quote" class="text-sm italic text-neutral-500 mt-8 font-serif-title">
+        “Hai tâm hồn, một ý nghĩ. Hai trái tim, chung một nhịp đập.”
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 4: CÂU CHUYỆN TÌNH YÊU (LOVE STORY TIMELINE)                     -->
+  <!-- ========================================================================= -->
+  <section class="py-20 px-4 max-w-5xl mx-auto">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="font-script text-3xl text-sky-700">Our Journey</p>
+      <h2 class="font-serif-title text-3xl md:text-4xl font-bold text-neutral-800 tracking-wide mt-1">Câu Chuyện Tình Yêu</h2>
+      <div class="ornament-divider my-3">
+        <i data-lucide="sparkles" class="w-4 h-4 text-sky-600"></i>
+      </div>
+      <p class="text-sm text-neutral-500">Từng bước chân chúng mình đã cùng nhau đi qua</p>
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="relative">
+      <!-- Trục giữa trên Desktop -->
+      <div class="hidden md:block absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-0.5 bg-sky-200"></div>
+      
+      <div id="love-story-timeline">
+        <!-- Render động từ js/main.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 5: THÔNG TIN SỰ KIỆN & ĐỊA ĐIỂM (EVENTS)                          -->
+  <!-- ========================================================================= -->
+  <section id="events" class="py-20 px-4 bg-gradient-to-b from-[#f0f7fd] via-sky-50/40 to-[#f0f7fd]">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <p class="font-script text-3xl text-sky-700">Wedding Events</p>
+        <h2 class="font-serif-title text-3xl md:text-4xl font-bold text-neutral-800 tracking-wide mt-1">Sự Kiện & Địa Điểm</h2>
+        <div class="ornament-divider my-3">
+          <i data-lucide="clock" class="w-4 h-4 text-sky-600"></i>
+        </div>
+        <p class="text-sm text-neutral-500">Thời gian và chỉ đường chi tiết đến ngày vui</p>
+      </div>
+
+      <div id="events-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Render động từ js/main.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 6: ALBUM ẢNH CƯỚI & LIGHTBOX (GALLERY)                           -->
+  <!-- ========================================================================= -->
+  <section class="py-20 px-4 max-w-6xl mx-auto">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <p class="font-script text-3xl text-sky-700">Sweet Memories</p>
+      <h2 class="font-serif-title text-3xl md:text-4xl font-bold text-neutral-800 tracking-wide mt-1">Album Ảnh Cưới</h2>
+      <div class="ornament-divider my-3">
+        <i data-lucide="camera" class="w-4 h-4 text-sky-600"></i>
+      </div>
+      <p class="text-sm text-neutral-500">Chạm vào từng bức ảnh để phóng to và ngắm nhìn trọn vẹn</p>
+    </div>
+
+    <!-- Lưới ảnh Gallery -->
+    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <!-- Render động từ js/gallery.js -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 7: DRESS CODE & LƯU Ý                                             -->
+  <!-- ========================================================================= -->
+  <section class="py-16 px-4 bg-white/70 border-y border-sky-100">
+    <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+      <p class="font-script text-3xl text-sky-700">Dress Code</p>
+      <h2 class="font-serif-title text-2xl md:text-3xl font-bold text-neutral-800 tracking-wide mt-1 mb-3">Trang Phục Gợi Ý</h2>
+      <p class="text-sm text-neutral-600 mb-8 max-w-lg mx-auto">
+        Để những bức ảnh kỷ niệm thêm phần hài hòa và trang nhã, gia đình khuyến khích khách mời diện trang phục theo các gam màu:
+      </p>
+
+      <!-- Bảng màu Dresscode -->
+      <div id="dresscode-palette" class="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-10">
+        <!-- Render động từ js/main.js -->
+      </div>
+
+      <!-- Lưu ý nhỏ -->
+      <div class="wedding-card rounded-2xl p-6 text-left max-w-xl mx-auto">
+        <h4 class="font-bold text-neutral-800 text-sm mb-3 flex items-center gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-sky-600"></i>
+          Một Vài Lưu Ý Nhỏ:
+        </h4>
+        <ul id="dresscode-notes" class="space-y-2">
+          <!-- Render động từ js/main.js -->
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 8: XÁC NHẬN THAM DỰ (RSVP FORM)                                  -->
+  <!-- ========================================================================= -->
+  <section class="py-20 px-4 max-w-2xl mx-auto">
+    <div class="wedding-card rounded-3xl p-8 md:p-10" data-aos="fade-up">
+      <div class="text-center mb-8">
+        <p class="font-script text-3xl text-sky-700">R.S.V.P</p>
+        <h2 class="font-serif-title text-2xl md:text-3xl font-bold text-neutral-800 tracking-wide mt-1">Xác Nhận Tham Dự</h2>
+        <div class="ornament-divider my-2">
+          <i data-lucide="mail-check" class="w-4 h-4 text-sky-600"></i>
+        </div>
+        <p class="text-xs md:text-sm text-neutral-500">
+          Sự hiện diện của bạn là niềm hạnh phúc lớn của gia đình chúng mình. Vui lòng xác nhận trước ngày 20/12/2026.
+        </p>
+      </div>
+
+      <form id="rsvp-form" class="space-y-5">
+        <div>
+          <label for="rsvp-name" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">Họ và Tên của bạn *</label>
+          <input type="text" id="rsvp-name" required placeholder="Ví dụ: Nguyễn Văn A" 
+                 class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50/50" />
+        </div>
+
+        <div>
+          <label for="rsvp-phone" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">Số Điện Thoại</label>
+          <input type="tel" id="rsvp-phone" placeholder="Để dâu rể tiện liên hệ đón tiếp" 
+                 class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50/50" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">Bạn là khách của ai? *</label>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:bg-sky-50/50 transition">
+              <input type="radio" name="side" value="Nhà Gái (Cô Dâu)" checked class="text-sky-600 focus:ring-sky-500" />
+              <span>Nhà Gái (Cô Dâu)</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:bg-sky-50/50 transition">
+              <input type="radio" name="side" value="Nhà Trai (Chú Rể)" class="text-sky-600 focus:ring-sky-500" />
+              <span>Nhà Trai (Chú Rể)</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">Bạn có thể tham dự không? *</label>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:bg-emerald-50/50 transition">
+              <input type="radio" name="attending" value="Chắc chắn tham dự" checked class="text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-emerald-700 font-medium">Chắc chắn tham dự 🎉</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 rounded-xl border border-neutral-200 cursor-pointer hover:bg-neutral-100 transition">
+              <input type="radio" name="attending" value="Rất tiếc không thể đến" class="text-neutral-500 focus:ring-neutral-400" />
+              <span class="text-neutral-600">Rất tiếc không thể đến</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="rsvp-count" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">Số lượng người tham dự</label>
+          <select id="rsvp-count" class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50/50">
+            <option value="1">Đi 1 mình (1 người)</option>
+            <option value="2">Đi cùng người thương / Bạn đời (2 người)</option>
+            <option value="3">Cả gia đình (3 người trở lên)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="rsvp-note" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">Lời nhắn thêm (nếu có)</label>
+          <textarea id="rsvp-note" rows="2" placeholder="Ví dụ: Mình đăng ký món chay / Gửi lời nhắn đến dâu rể..." 
+                    class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50/50"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white font-semibold text-sm shadow-lg shadow-sky-600/25 active:scale-98 transition flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Gửi Xác Nhận Tham Dự</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 9: SỔ LƯU BÚT LỜI CHÚC (GUESTBOOK)                                -->
+  <!-- ========================================================================= -->
+  <section class="py-20 px-4 max-w-3xl mx-auto">
+    <div class="text-center mb-12" data-aos="fade-up">
+      <p class="font-script text-3xl text-sky-700">Wishes & Love</p>
+      <h2 class="font-serif-title text-3xl md:text-4xl font-bold text-neutral-800 tracking-wide mt-1">Sổ Lưu Bút Online</h2>
+      <div class="ornament-divider my-3">
+        <i data-lucide="message-square-heart" class="w-4 h-4 text-sky-600"></i>
+      </div>
+      <p class="text-sm text-neutral-500">Gửi gắm những lời chúc phúc ngọt ngào nhất đến cặp đôi</p>
+    </div>
+
+    <!-- Form gửi lời chúc -->
+    <div class="wedding-card rounded-3xl p-6 md:p-8 mb-10" data-aos="fade-up">
+      <form id="wish-form" class="space-y-4">
+        <div>
+          <input type="text" id="wish-name" required placeholder="Tên hoặc biệt danh của bạn *" 
+                 class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50/50" />
+        </div>
+        <div>
+          <textarea id="wish-message" rows="3" required placeholder="Viết lời chúc mừng tốt đẹp nhất tới cô dâu và chú rể... *" 
+                    class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50/50"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 px-6 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition flex items-center justify-center gap-2">
+          <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+          <span>Gửi Lời Chúc Phúc</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Danh sách lời chúc -->
+    <div id="wishes-list" class="space-y-4 max-h-[460px] overflow-y-auto pr-2">
+      <!-- Render động từ js/rsvp.js -->
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 11: LỜI CẢM ƠN & FOOTER                                           -->
+  <!-- ========================================================================= -->
+  <footer class="py-16 px-4 text-center bg-white border-t border-sky-100">
+    <div class="max-w-md mx-auto" data-aos="fade-up">
+      <p class="font-script text-4xl text-sky-700 mb-2">Thank You!</p>
+      <h3 class="font-serif-title text-2xl font-bold text-neutral-800 mb-4">Vi Thảo & Minh Hoàng</h3>
+      <p class="text-neutral-500 text-sm leading-relaxed mb-6">
+        Cảm ơn bạn đã luôn là một phần ý nghĩa trong hành trình yêu thương của chúng mình. Hẹn gặp lại bạn trong ngày hạnh phúc nhất!
+      </p>
+
+      <div class="ornament-divider my-6">
+        <i data-lucide="heart" class="w-4 h-4 fill-sky-600 text-sky-600"></i>
+      </div>
+
+      <p class="text-xs text-neutral-400">
+        © 2026 Wedding Invitation • Writed by HoangTLM
+      </p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- LIGHTBOX MODAL PHÓNG TO ẢNH CƯỚI                                         -->
+  <!-- ========================================================================= -->
+  <div id="gallery-lightbox-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center bg-black/95 backdrop-blur-md">
+    <!-- Nút Đóng -->
+    <button id="lightbox-close-btn" class="absolute top-5 right-5 text-white/80 hover:text-white p-3 z-50 transition" title="Đóng">
+      <i data-lucide="x" class="w-7 h-7"></i>
+    </button>
+
+    <!-- Nút Trước (Prev) -->
+    <button id="lightbox-prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-3 z-50 transition hidden md:block" title="Ảnh trước">
+      <i data-lucide="chevron-left" class="w-8 h-8"></i>
+    </button>
+
+    <!-- Nút Tiếp (Next) -->
+    <button id="lightbox-next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-3 z-50 transition hidden md:block" title="Ảnh tiếp theo">
+      <i data-lucide="chevron-right" class="w-8 h-8"></i>
+    </button>
+
+    <!-- Khung Ảnh Lớn -->
+    <div class="relative max-w-4xl max-h-[85vh] p-4 flex flex-col items-center">
+      <img id="lightbox-image" src="" alt="Ảnh cưới phóng to" class="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-2xl modal-zoom" />
+      <div class="mt-3 text-center">
+        <p id="lightbox-caption" class="text-white text-sm font-medium"></p>
+        <span id="lightbox-counter" class="text-neutral-400 text-xs mt-1 block"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AOS (Animate on Scroll) JS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <!-- Các Script Dự Án -->
+  <script src="js/config.js"></script>
+  <script src="js/petals.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/rsvp.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
