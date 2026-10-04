@@ -102,36 +102,132 @@ window.WEDDING_CONFIG = {
   // 6. ALBUM ẢNH CƯỚI (GALLERY)
   gallery: [
     {
-      url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-      caption: "Khoảnh khắc hạnh phúc ngập tràn"
+      url: "assets/images/traonhan.jpg",
+      caption: "Trao nhau hẹn ước trọn đời"
     },
     {
-      url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
+      url: "assets/images/deonhan.jpg",
+      caption: "Nhẫn cưới trao tay - Lời thề trăm năm"
+    },
+    {
+      url: "assets/images/gallery/cd1.jpg",
+      caption: "Nàng thơ rạng ngời"
+    },
+    {
+      url: "assets/images/gallery/cr1.jpg",
+      caption: "Chàng rể hạnh phúc"
+    },
+    {
+      url: "assets/images/gallery/cd2.jpg",
+      caption: "Nụ cười tỏa nắng"
+    },
+    {
+      url: "assets/images/gallery/cr2.jpg",
+      caption: "Phong độ & Tự tin"
+    },
+    {
+      url: "assets/images/background.jpg",
+      caption: "Khoảnh khắc ngọt ngào bên nhau"
+    },
+    {
+      url: "assets/images/gallery/z8336654073447_e9e1938666b635f6bcf235817c4ca812.jpg",
+      caption: "Tình yêu đơm hoa kết trái"
+    },
+    {
+      url: "assets/images/z8336653973357_dbe29d71f91fe34d113eedd692c0c17d.jpg",
       caption: "Nụ cười rạng rỡ của đôi uyên ương"
     },
     {
-      url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&q=80",
+      url: "assets/images/z8336653986860_136a28f04029d406e3216abe2a8ccd22.jpg",
       caption: "Nắm tay nhau đi qua năm tháng"
     },
     {
-      url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
-      caption: "Nhẫn cưới - Lời hứa trọn đời"
+      url: "assets/images/z8336653986907_259fbb7719f87638cf47847232bb5173.jpg",
+      caption: "Ánh mắt trao trọn yêu thương"
     },
     {
-      url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1200&q=80",
+      url: "assets/images/z8336653990187_942b8552742042ef33be7bf7432c9e58.jpg",
       caption: "Hẹn ước cùng nhau già đi"
     },
     {
-      url: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=80",
+      url: "assets/images/z8336653990221_a9682fc92c60fab14c016c684d5b47cb.jpg",
       caption: "Dưới vòm hoa tình yêu"
     },
     {
-      url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
+      url: "assets/images/z8336654025277_ab6c15c718294e53c1214e23ff691d0f.jpg",
       caption: "Từng bước chân song hành"
     },
     {
-      url: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=1200&q=80",
-      caption: "Ánh mắt trao trọn yêu thương"
+      url: "assets/images/z8336654025430_c355b6a4e67890f004122f2d5bbe0737.jpg",
+      caption: "Bình yên là khi có nhau"
+    },
+    {
+      url: "assets/images/z8336654036532_7bbd0d90f055ffd71de3dcfdb7f789ab.jpg",
+      caption: "Mảnh ghép hoàn hảo"
+    },
+    {
+      url: "assets/images/z8336654036670_5b44be7713170ee82f20e9330653ddde.jpg",
+      caption: "Lời hứa chung đôi"
+    },
+    {
+      url: "assets/images/z8336654036693_485d52408124287e3615b50652b34215.jpg",
+      caption: "Hạnh phúc giản đơn"
+    },
+    {
+      url: "assets/images/z8336654037942_50cc4c88273aa958de568abf9f87a9e2.jpg",
+      caption: "Trọn vẹn yêu thương"
+    },
+    {
+      url: "assets/images/z8336654073674_eb6980f0b90eacf455abdd8f327d3a5c.jpg",
+      caption: "Một đời an yên"
+    },
+    {
+      url: "assets/images/z8336654073765_12b9229d235bbe5201a19a6eb18fd936.jpg",
+      caption: "Ghi dấu ngày chung đôi"
+    },
+    {
+      url: "assets/images/z8336654088182_99f7e2f3237682d5f923cbbacb9e2e2f.jpg",
+      caption: "Ngọt ngào từng khoảnh khắc"
+    },
+    {
+      url: "assets/images/z8336654088227_e82d7e424a44c324ec755e32d477eced.jpg",
+      caption: "Chạm vào yêu thương"
+    },
+    {
+      url: "assets/images/z8336654089898_2000d0f30e731bf81169874f86f90396.jpg",
+      caption: "Thanh xuân có nhau"
+    },
+    {
+      url: "assets/images/z8336654089971_4e2cbecf633d70b7db55f360d42bf147.jpg",
+      caption: "Bên nhau trọn đời"
+    },
+    {
+      url: "assets/images/z8336654090160_7e350ada5c7eb2997d06c4b51e2de562.jpg",
+      caption: "Duyên nợ trăm năm"
+    },
+    {
+      url: "assets/images/z8336654126850_6c0409024254795ad779158ffa494693.jpg",
+      caption: "Hành trình hạnh phúc bắt đầu"
+    },
+    {
+      url: "assets/images/z8336654127039_dd9bfe8e689b627a98abd739a71f7f7e.jpg",
+      caption: "Mãi mãi bên nhau"
+    },
+    {
+      url: "assets/images/z8336654127079_e45d7738be70dfee8477e4a54c7c620c.jpg",
+      caption: "Nắm tay anh thật chặt"
+    },
+    {
+      url: "assets/images/z8336654140139_0b7d5a61bca66601fb623adfdfc39fb3.jpg",
+      caption: "Cùng nhau xây đắp tương lai"
+    },
+    {
+      url: "assets/images/z8336654141607_47b6a2ec95a93dea81bdc9fd64f880b5.jpg",
+      caption: "Yêu thương đong đầy"
+    },
+    {
+      url: "assets/images/z8336654141779_89329a59699ef097ef09ae52af326e7c.jpg",
+      caption: "Ngày chung đôi ngập tràn hạnh phúc"
     }
   ],
 
