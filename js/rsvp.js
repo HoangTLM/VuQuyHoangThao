@@ -43,12 +43,12 @@ function initRsvpAndGuestbook() {
   // 1. Xử lý Form RSVP
   const rsvpForm = document.getElementById("rsvp-form");
   if (rsvpForm) {
-    // Tự động điền tên nếu có param URL ?to=
+    // Tự động điền tên nếu có param URL ?to=, ?guest=, ?u=
     const urlParams = new URLSearchParams(window.location.search);
-    const guestParam = urlParams.get("to");
+    const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("u") || urlParams.get("k");
     const nameInput = document.getElementById("rsvp-name");
     if (guestParam && nameInput) {
-      nameInput.value = guestParam;
+      nameInput.value = decodeURIComponent(guestParam).replace(/\+/g, " ").trim();
     }
 
     rsvpForm.addEventListener("submit", (e) => {

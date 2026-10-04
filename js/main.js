@@ -6,14 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const cfg = window.WEDDING_CONFIG;
   if (!cfg) return;
 
-  // 1. CÁ NHÂN HÓA LỜI MỜI TỪ URL PARAMETER (?to=...)
+  // 1. CÁ NHÂN HÓA LỜI MỜI TỪ URL PARAMETER (?to=, ?guest=, ?u=, ?k=)
   const urlParams = new URLSearchParams(window.location.search);
-  const guestParam = urlParams.get("to");
+  const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("u") || urlParams.get("k");
   const guestDisplayEl = document.getElementById("personalized-guest-name");
   const envelopeGuestEl = document.getElementById("envelope-guest-name");
 
   if (guestParam) {
-    const formattedName = decodeURIComponent(guestParam).replace(/\+/g, " ");
+    const formattedName = decodeURIComponent(guestParam).replace(/\+/g, " ").trim();
     if (guestDisplayEl) {
       guestDisplayEl.textContent = `Trân trọng kính mời: ${formattedName}`;
       guestDisplayEl.classList.remove("hidden");
@@ -213,11 +213,11 @@ function setImage(id, src) {
   if (el && src) el.src = src;
 }
 
-function copyToClipboard(text) {
+function copyToClipboard(text, customMsg) {
   navigator.clipboard.writeText(text).then(() => {
-    window.showToast?.(`Đã sao chép số tài khoản: ${text}`);
+    window.showToast?.(customMsg || `Đã sao chép: ${text}`);
   }).catch(() => {
-    window.showToast?.("Không thể sao chép tự động, vui lòng nhập tay.");
+    window.showToast?.("Không thể sao chép tự động, vui lòng chọn và copy thủ công.");
   });
 }
 
@@ -228,5 +228,68 @@ function handleAddToCalendar(title, desc, location) {
   window.open(googleCalendarUrl, "_blank");
 }
 
+// CÔNG CỤ TẠO LINK MỜI CÁ NHÂN HÓA (DÀNH CHO DÂU RỂ)
+function openLinkGenerator() {
+  const modal = document.getElementById("link-generator-modal");
+  if (modal) {
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+    const input = document.getElementById("gen-guest-name");
+    if (input) setTimeout(() => input.focus(), 100);
+  }
+}
+
+function closeLinkGenerator() {
+  const modal = document.getElementById("link-generator-modal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+function generatePersonalizedLink() {
+  const input = document.getElementById("gen-guest-name");
+  const name = input?.value?.trim() || "";
+  const resultContainer = document.getElementById("gen-result-container");
+  const linkOutput = document.getElementById("gen-link-output");
+  const msgOutput = document.getElementById("gen-message-output");
+
+  if (!name) {
+    window.showToast?.("Vui lòng nhập tên khách mời (ví dụ: Anh Nam, Bạn Linh)!");
+    return;
+  }
+
+  // Lấy baseUrl hiện tại (loại bỏ params cũ)
+  const baseUrl = window.location.origin + window.location.pathname;
+  const encodedName = encodeURIComponent(name);
+  const fullLink = `${baseUrl}?to=${encodedName}`;
+  const messageText = `Trân trọng kính mời ${name} đến chung vui trong ngày Lễ Vu Quy của Vi Thảo & Minh Hoàng. Xem thiệp mời online tại: ${fullLink}`;
+
+  if (linkOutput) linkOutput.value = fullLink;
+  if (msgOutput) msgOutput.value = messageText;
+  if (resultContainer) resultContainer.classList.remove("hidden");
+
+  copyToClipboard(fullLink, `Đã tạo & sao chép link mời: "${name}"`);
+}
+
+function copyGeneratedMessage() {
+  const msgOutput = document.getElementById("gen-message-output");
+  if (msgOutput && msgOutput.value) {
+    copyToClipboard(msgOutput.value, "Đã sao chép tin nhắn kèm link mời!");
+  }
+}
+
+function testGeneratedLink() {
+  const linkOutput = document.getElementById("gen-link-output");
+  if (linkOutput && linkOutput.value) {
+    window.open(linkOutput.value, "_blank");
+  }
+}
+
 window.copyToClipboard = copyToClipboard;
 window.handleAddToCalendar = handleAddToCalendar;
+window.openLinkGenerator = openLinkGenerator;
+window.closeLinkGenerator = closeLinkGenerator;
+window.generatePersonalizedLink = generatePersonalizedLink;
+window.copyGeneratedMessage = copyGeneratedMessage;
+window.testGeneratedLink = testGeneratedLink;
