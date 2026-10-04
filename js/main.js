@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setText("bride-parents", cfg.bride.parents);
   setText("bride-desc", cfg.bride.description);
   setImage("bride-avatar", cfg.bride.avatar);
+  if (cfg.heroBackground) {
+    setImage("hero-background-img", cfg.heroBackground);
+  }
 
   setText("wedding-date-solar", cfg.displayDate.solar);
   setText("wedding-date-lunar", cfg.displayDate.lunar);

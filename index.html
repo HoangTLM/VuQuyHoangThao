@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Thiệp Mời Cưới - Vi Thảo & Minh Hoàng">
   <meta property="og:description" content="Trân trọng kính mời bạn đến chung vui trong ngày trọng đại của chúng mình!">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80">
+  <meta property="og:image" content="assets/images/background.jpg">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -92,7 +92,8 @@
   <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
     <!-- Ảnh nền lãng mạn -->
     <div class="absolute inset-0 z-0">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=85" 
+      <img id="hero-background-img"
+           src="assets/images/background.jpg" 
            alt="Ảnh cưới" 
            class="w-full h-full object-cover object-center filter brightness-[0.78]" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#f0f7fd]"></div>
@@ -150,7 +151,7 @@
       <!-- CÔ DÂU (Slide từ trái) -->
       <div class="wedding-card rounded-3xl p-8 text-center" data-aos="fade-right" data-aos-duration="900">
         <div class="relative w-44 h-44 md:w-52 md:h-52 mx-auto rounded-full overflow-hidden p-1.5 border-2 border-sky-300 shadow-xl mb-6 group">
-          <img id="bride-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80" 
+          <img id="bride-avatar" src="assets/images/gallery/cd2.jpg" 
                alt="Cô Dâu" class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110" />
         </div>
         <span class="text-xs uppercase tracking-widest text-sky-700 font-bold bg-sky-100 py-1 px-3 rounded-full">Cô Dâu</span>
@@ -164,7 +165,7 @@
       <!-- CHÚ RỂ (Slide từ phải) -->
       <div class="wedding-card rounded-3xl p-8 text-center" data-aos="fade-left" data-aos-duration="900">
         <div class="relative w-44 h-44 md:w-52 md:h-52 mx-auto rounded-full overflow-hidden p-1.5 border-2 border-sky-300 shadow-xl mb-6 group">
-          <img id="groom-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" 
+          <img id="groom-avatar" src="assets/images/gallery/cr1.jpg" 
                alt="Chú Rể" class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110" />
         </div>
         <span class="text-xs uppercase tracking-widest text-sky-700 font-bold bg-sky-100 py-1 px-3 rounded-full">Chú Rể</span>

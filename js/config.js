@@ -14,7 +14,7 @@ window.WEDDING_CONFIG = {
     roleTitle: "Chú Rể",
     parents: "Ông Trần Văn Hưng & Bà Lê Thị Bảy",
     phone: "0901234567",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    avatar: "assets/images/gallery/cr1.jpg",
     description: "Một chàng trai đam mê công nghệ, luôn yêu thương, quan tâm và trân trọng từng khoảnh khắc được đồng hành cùng người bạn đời của mình.",
     social: {
       facebook: "https://facebook.com",
@@ -28,13 +28,15 @@ window.WEDDING_CONFIG = {
     roleTitle: "Cô Dâu",
     parents: "Ông Trương Cường & Bà Nguyễn Tường Vi",
     phone: "0987654321",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80",
+    avatar: "assets/images/gallery/cd2.jpg",
     description: "Một cô gái nhẹ nhàng, yêu nghệ thuật và nụ cười luôn rạng rỡ. Hạnh phúc lớn nhất là tìm được bờ vai bình yên để tựa vào mỗi ngày.",
     social: {
       facebook: "https://facebook.com",
       instagram: "https://instagram.com"
     }
   },
+
+  heroBackground: "assets/images/background.jpg",
 
   // 2. THỜI GIAN VÀ ĐẾM NGƯỢC
   weddingDate: "2026-10-24T18:00:00", // Định dạng YYYY-MM-DDTHH:mm:ss dùng cho đồng hồ đếm ngược
