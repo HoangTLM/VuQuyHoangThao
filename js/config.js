@@ -41,7 +41,7 @@ window.WEDDING_CONFIG = {
   displayDate: {
     solar: "Thứ Bảy, ngày 24 tháng 10 năm 2026",
     lunar: "Ngày 15 tháng 09 năm Bính Ngọ (Âm lịch)",
-    time: "6:00 Sáng"
+    time: "Đón khách: 18:00 • Đãi tiệc: 19:00"
   },
 
   // 3. THÔNG ĐIỆP & LỜI NGỎ
@@ -53,8 +53,8 @@ window.WEDDING_CONFIG = {
     {
       id: "le-vu-quy",
       title: "LỄ VU QUY (NHÀ GÁI)",
-      time: "08:30 - 20/09/2026",
-      lunarDate: "(Tức ngày 10/08 năm Bính Ngọ)",
+      time: "24/10/2026 (Đón khách: 18:00 • Đãi tiệc: 19:00)",
+      lunarDate: "(Tức ngày 15/09 năm Bính Ngọ)",
       address: "Mộ Đức - Quãng Ngãi",
       mapUrl: "https://maps.google.com/?q=Mo+Duc+Quang+Ngai",
       calendarTitle: "Lễ Vu Quy - Vi Thảo & Minh Hoàng",
@@ -142,7 +142,7 @@ window.WEDDING_CONFIG = {
       { name: "Xanh Sage", hex: "#A3B18A" }
     ],
     notes: [
-      "Khai tiệc đúng giờ vào lúc 11:30 để mọi nghi lễ diễn ra trọn vẹn nhất.",
+      "Khai tiệc đúng giờ vào lúc 19:00 để mọi nghi lễ diễn ra trọn vẹn nhất.",
       "Trung tâm có bãi giữ xe ô tô & xe máy rộng rãi tại tầng hầm (miễn phí vé).",
       "Nếu bạn có chế độ ăn kiêng hoặc ăn chay, vui lòng ghi chú ở phần Xác nhận tham dự (RSVP)."
     ]

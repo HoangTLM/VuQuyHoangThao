@@ -224,8 +224,8 @@ function copyToClipboard(text, customMsg) {
 }
 
 function handleAddToCalendar(title, desc, location) {
-  const start = "20261228T040000Z";
-  const end = "20261228T070000Z";
+  const start = "20261024T110000Z";
+  const end = "20261024T143000Z";
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(desc)}&location=${encodeURIComponent(location)}&dates=${start}/${end}`;
   window.open(googleCalendarUrl, "_blank");
 }
