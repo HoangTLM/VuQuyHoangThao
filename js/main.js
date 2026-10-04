@@ -31,12 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
   setText("groom-fullname", cfg.groom.fullName);
   setText("groom-parents", cfg.groom.parents);
   setText("groom-desc", cfg.groom.description);
-  setImage("groom-avatar", cfg.groom.avatar);
+  setImage("groom-avatar", cfg.groom.avatar, cfg.groom.avatarPosition || "center top");
 
   setText("bride-fullname", cfg.bride.fullName);
   setText("bride-parents", cfg.bride.parents);
   setText("bride-desc", cfg.bride.description);
-  setImage("bride-avatar", cfg.bride.avatar);
+  setImage("bride-avatar", cfg.bride.avatar, cfg.bride.avatarPosition || "center 20%");
   if (cfg.heroBackground) {
     setImage("hero-background-img", cfg.heroBackground);
   }
@@ -213,9 +213,12 @@ function setText(id, text) {
   if (el && text) el.textContent = text;
 }
 
-function setImage(id, src) {
+function setImage(id, src, position) {
   const el = document.getElementById(id);
-  if (el && src) el.src = src;
+  if (el && src) {
+    el.src = src;
+    if (position) el.style.objectPosition = position;
+  }
 }
 
 function copyToClipboard(text, customMsg) {
