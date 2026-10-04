@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const isEven = idx % 2 === 0;
       return `
         <div class="relative flex flex-col md:flex-row items-center mb-12 last:mb-0 ${isEven ? 'md:flex-row-reverse' : ''}" 
-             data-aos="${isEven ? 'fade-left' : 'fade-right'}" data-aos-duration="900">
+             data-aos="fade-up" data-aos-duration="900">
           
           <!-- Nội dung -->
           <div class="w-full md:w-5/12 ${isEven ? 'md:text-left md:pl-8' : 'md:text-right md:pr-8'} mb-6 md:mb-0">
@@ -85,10 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const eventsContainer = document.getElementById("events-container");
   if (eventsContainer && cfg.events) {
     if (cfg.events.length === 1) {
-      eventsContainer.className = "max-w-xl mx-auto";
+      eventsContainer.className = "max-w-xl mx-auto w-full";
     }
     eventsContainer.innerHTML = cfg.events.map((ev, idx) => `
-      <div class="wedding-card rounded-3xl p-6 md:p-8 flex flex-col justify-between" 
+      <div class="wedding-card rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col justify-between w-full" 
            data-aos="fade-up" data-aos-delay="${idx * 150}">
         <div>
           <div class="w-14 h-14 rounded-2xl bg-sky-100/80 text-sky-800 flex items-center justify-center mb-5 mx-auto">
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <h3 class="text-xl font-bold text-center text-neutral-800 font-serif-title mb-3 tracking-wide">${ev.title}</h3>
           
           <div class="text-center my-4 space-y-1">
-            <p class="text-lg font-bold text-sky-700">${ev.time}</p>
+            <p class="text-base sm:text-lg font-bold text-sky-700 leading-snug break-words">${ev.time}</p>
             <p class="text-xs text-neutral-500 italic">${ev.lunarDate}</p>
           </div>
 
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     bankContainer.innerHTML = [groomB, brideB].map((acc, idx) => `
       <div class="wedding-card rounded-3xl p-6 md:p-8 flex flex-col items-center text-center" 
-           data-aos="${idx === 0 ? 'fade-right' : 'fade-left'}">
+           data-aos="fade-up" data-aos-delay="${idx * 150}">
         <div class="w-12 h-12 rounded-full bg-sky-100 text-sky-800 flex items-center justify-center mb-3">
           <i data-lucide="gift" class="w-6 h-6"></i>
         </div>
@@ -187,7 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!progressBar) return;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const progress = (scrollTop / scrollHeight) * 100;
+    if (scrollHeight <= 0) return;
+    const progress = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
     progressBar.style.width = `${progress}%`;
   });
 
@@ -196,9 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.AOS.init({
       duration: 800,
       easing: "ease-out-cubic",
-      once: false, // Cho phép animation lặp lại mỗi khi cuộn tới
-      mirror: true, // Kích hoạt animation khi cuộn ngược từ dưới lên
-      offset: 80
+      once: true, // Chạy animation một lần mượt mà, không reset gây lệch giao diện mobile
+      offset: 40
     });
   }
 

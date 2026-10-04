@@ -19,11 +19,23 @@ html {
   font-family: 'Montserrat', sans-serif;
   background-color: var(--color-bg-cream);
   color: var(--color-text-dark);
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
   position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Đảm bảo toàn bộ section và container không gây tràn chiều ngang trên mobile */
+section, header, footer, main {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* Custom Fonts */
