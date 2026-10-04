@@ -225,7 +225,7 @@ function copyToClipboard(text, customMsg) {
   navigator.clipboard.writeText(text).then(() => {
     window.showToast?.(customMsg || `Đã sao chép: ${text}`);
   }).catch(() => {
-    window.showToast?.("Không thể sao chép tự động, vui lòng chọn và copy thủ công.");
+    window.showToast?.("Không thể sao chép tự động, vui lòng chọn và sao chép thủ công.");
   });
 }
 

@@ -237,7 +237,7 @@ window.WEDDING_CONFIG = {
     notes: [
       "Khai tiệc đúng giờ vào lúc 19:00 để mọi nghi lễ diễn ra trọn vẹn nhất.",
       "Trung tâm có bãi giữ xe ô tô & xe máy rộng rãi tại tầng hầm (miễn phí vé).",
-      "Nếu bạn có chế độ ăn kiêng hoặc ăn chay, vui lòng ghi chú ở phần Xác nhận tham dự (RSVP)."
+      "Nếu bạn có chế độ ăn kiêng hoặc ăn chay, vui lòng ghi chú ở phần Xác nhận tham dự."
     ]
   },
 
