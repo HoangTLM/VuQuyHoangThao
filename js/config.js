@@ -72,30 +72,23 @@ window.WEDDING_CONFIG = {
     {
       year: "2021",
       date: "14/02/2021",
-      title: "Lần Đầu Gặp Gỡ",
-      content: "Một buổi chiều mưa bất chợt tại quán cà phê sách nhỏ ở trung tâm Sài Gòn. Ánh mắt chạm nhau và câu chuyện bắt đầu từ những điều giản dị nhất.",
-      image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80"
+      title: "Chính Thức Trở Thành Người Yêu",
+      content: "Một ngày Valentine đặc biệt khi hai trái tim tìm thấy sự đồng điệu, cùng trao nhau lời ước hẹn và chính thức nắm tay nhau bước vào chặng đường yêu thương.",
+      image: "assets/images/z8336654090160_7e350ada5c7eb2997d06c4b51e2de562.jpg"
     },
     {
-      year: "2022",
-      date: "25/12/2022",
-      title: "Lời Tỏ Tình Dưới Đêm Giáng Sinh",
-      content: "Dưới ánh đèn lung linh của cây thông Noel, chúng mình chính thức nắm tay nhau và trao nhau lời hứa cùng vượt qua mọi thử thách.",
-      image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80"
+      year: "2026",
+      date: "28/04 - 02/05/2026",
+      title: "Lần Đầu Đi Xuyên Việt Cùng Nhau",
+      content: "Chuyến hành trình phượt xuyên Việt đáng nhớ của hai đứa qua những cung đường đèo hùng vĩ, biển xanh nắng gió và những khoảnh khắc tuổi trẻ rực rỡ bên nhau.",
+      image: "assets/images/XuyenViet/xuyen_viet_3.jpg"
     },
     {
-      year: "2024",
-      date: "15/08/2024",
-      title: "Chuyến Du Lịch Đầu Tiên Cùng Nhau",
-      content: "Chuyến đi Đà Lạt nhiều kỷ niệm, ngắm bình minh trên đồi chè và cùng mơ về một mái ấm bình yên trong tương lai.",
-      image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      year: "2025",
-      date: "20/10/2025",
-      title: "Lời Cầu Hôn Ngọt Ngào",
-      content: "Bên bờ biển lúc hoàng hôn buông xuống, chàng trai quỳ gối trao chiếc nhẫn nhỏ cùng câu hỏi: 'Em đồng ý làm vợ anh nhé?'. Và câu trả lời là 'Em đồng ý!'.",
-      image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80"
+      year: "2026",
+      date: "20/09/2026",
+      title: "Ngày Đính Hôn",
+      content: "Ngày gia đình sum vầy chứng kiến khoảnh khắc đính ước thiêng liêng, trao nhau chiếc nhẫn đính hôn và cùng hướng về ngày chung đôi hạnh phúc.",
+      image: "assets/images/traonhan.jpg"
     }
   ],
 
