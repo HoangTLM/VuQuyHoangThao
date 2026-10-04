@@ -4,6 +4,7 @@
 
 let bgAudio = null;
 let isPlaying = false;
+let hasSeekedToStart = false;
 
 function initMusicAndEnvelope() {
   const envelopeScreen = document.getElementById("envelope-screen");
@@ -14,31 +15,53 @@ function initMusicAndEnvelope() {
   const rawMusicUrl = window.WEDDING_CONFIG?.music?.url || "";
   const startTime = window.WEDDING_CONFIG?.music?.startTime || 10;
 
+  function doSeek() {
+    if (hasSeekedToStart || !bgAudio) return;
+    try {
+      if (bgAudio.readyState >= 1) { // HAVE_METADATA trở lên mới seek được trên web server
+        bgAudio.currentTime = startTime;
+        if (Math.abs(bgAudio.currentTime - startTime) <= 1) {
+          hasSeekedToStart = true;
+        }
+      }
+    } catch (e) {
+      console.warn("Seek error:", e);
+    }
+  }
+
   if (rawMusicUrl) {
     const musicUrl = encodeURI(rawMusicUrl);
     bgAudio = new Audio(musicUrl);
     bgAudio.loop = true;
     bgAudio.preload = "auto";
 
-    bgAudio.addEventListener("loadedmetadata", () => {
-      if (bgAudio.currentTime < startTime) {
-        bgAudio.currentTime = startTime;
+    // Bắt các sự kiện khi audio đã tải xong metadata và có thể seek
+    bgAudio.addEventListener("loadedmetadata", doSeek);
+    bgAudio.addEventListener("canplay", doSeek);
+    bgAudio.addEventListener("playing", doSeek);
+
+    // Chặn bắt ngay nhịp phát đầu tiên: nếu phát từ 0s thì lập tức tua tới giây thứ 10
+    bgAudio.addEventListener("timeupdate", () => {
+      if (!hasSeekedToStart && startTime > 0) {
+        if (bgAudio.currentTime < startTime - 0.3) {
+          try {
+            bgAudio.currentTime = startTime;
+            hasSeekedToStart = true;
+          } catch (e) {}
+        } else {
+          hasSeekedToStart = true;
+        }
       }
     });
   }
 
   function playMusic() {
     if (!bgAudio) return;
-    try {
-      if (bgAudio.currentTime < startTime) {
-        bgAudio.currentTime = startTime;
-      }
-    } catch (e) {
-      console.log("Could not set currentTime yet:", e);
-    }
+    doSeek();
 
     bgAudio.play().then(() => {
       isPlaying = true;
+      doSeek();
       if (musicDiscImg) {
         musicDiscImg.classList.remove("spin-paused");
         musicDiscImg.classList.add("spin-slow");
