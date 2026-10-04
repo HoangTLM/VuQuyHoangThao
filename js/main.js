@@ -24,8 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 2. NẠP THÔNG TIN CẶP ĐÔI
-  setText("groom-name-hero", cfg.groom.name);
   setText("bride-name-hero", cfg.bride.name);
+  setText("groom-name-hero", cfg.groom.name);
+  setText("envelope-bride-name", cfg.bride.name);
+  setText("envelope-groom-name", cfg.groom.name);
   setText("groom-fullname", cfg.groom.fullName);
   setText("groom-parents", cfg.groom.parents);
   setText("groom-desc", cfg.groom.description);
