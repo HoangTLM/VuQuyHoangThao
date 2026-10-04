@@ -52,11 +52,11 @@ window.WEDDING_CONFIG = {
   events: [
     {
       id: "le-vu-quy",
-      title: "LỄ VU QUY (NHÀ GÁI)",
+      title: "LỄ VU QUY",
       time: "24/10/2026 (Đón khách: 18:00 • Đãi tiệc: 19:00)",
       lunarDate: "(Tức ngày 15/09 năm Bính Ngọ)",
-      address: "Mộ Đức - Quãng Ngãi",
-      mapUrl: "https://maps.google.com/?q=Mo+Duc+Quang+Ngai",
+      address: "Trung tâm Hội nghị - Tiệc cưới Diamond Place, 15A Hồ Văn Huê, Phường 9, Phú Nhuận, TP. Hồ Chí Minh",
+      mapUrl: "https://maps.app.goo.gl/Tx76urfwevy978KQ6",
       calendarTitle: "Lễ Vu Quy - Vi Thảo & Minh Hoàng",
       calendarDesc: "Tham dự Lễ Vu Quy của Vi Thảo và Minh Hoàng",
       icon: "heart-handshake"
