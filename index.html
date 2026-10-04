@@ -89,42 +89,43 @@
   <!-- ========================================================================= -->
   <!-- SECTION 1: HERO BANNER (MÀN HÌNH CHÍNH)                                   -->
   <!-- ========================================================================= -->
-  <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+  <section class="relative min-h-screen min-h-[100dvh] flex flex-col justify-end items-center text-center px-4 overflow-hidden pb-12 sm:pb-16 pt-28">
     <!-- Ảnh nền lãng mạn -->
     <div class="absolute inset-0 z-0">
       <img id="hero-background-img"
            src="assets/images/background.jpg" 
            alt="Ảnh cưới" 
-           class="w-full h-full object-cover object-center filter brightness-[0.78]" />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#f0f7fd]"></div>
+           class="w-full h-full object-cover object-center filter brightness-[0.80]" />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 via-35% to-black/75"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#f0f7fd] to-transparent pointer-events-none"></div>
     </div>
 
     <!-- Nội dung Text Hero -->
-    <div class="relative z-10 max-w-2xl mx-auto text-white pt-16 pb-24" data-aos="fade-up" data-aos-duration="1200">
-      <p class="font-script text-3xl md:text-5xl text-sky-200 mb-2 drop-shadow">Save Our Date</p>
+    <div class="relative z-10 max-w-2xl mx-auto text-white w-full pb-2 sm:pb-6" data-aos="fade-up" data-aos-duration="1200">
+      <p class="font-script text-3xl md:text-5xl text-sky-200 mb-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">Save Our Date</p>
       
-      <h1 class="font-serif-title text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-wide my-4 leading-tight drop-shadow-md flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
+      <h1 class="font-serif-title text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-wide my-3 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
         <span id="bride-name-hero" class="whitespace-nowrap">Vi Thảo</span>
         <span class="text-sky-300 font-script text-3xl sm:text-4xl md:text-6xl leading-none">&</span>
         <span id="groom-name-hero" class="whitespace-nowrap">Minh Hoàng</span>
       </h1>
 
-      <div class="ornament-divider my-4">
+      <div class="ornament-divider my-3">
         <i data-lucide="sparkles" class="w-4 h-4 text-sky-300"></i>
       </div>
 
       <!-- Tên khách mời cá nhân hóa -->
-      <div id="personalized-guest-name" class="hidden inline-block bg-white/20 backdrop-blur-md border border-white/40 text-sky-100 px-6 py-2 rounded-full text-sm md:text-base font-medium mb-6 drop-shadow">
+      <div id="personalized-guest-name" class="hidden inline-block bg-black/30 backdrop-blur-md border border-white/40 text-sky-100 px-6 py-2 rounded-full text-sm md:text-base font-medium mb-4 shadow-lg">
         Trân trọng kính mời: Quý Khách Mời
       </div>
 
-      <div class="space-y-1 drop-shadow">
+      <div class="space-y-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
         <p id="wedding-date-solar" class="text-lg md:text-xl font-semibold tracking-wider text-neutral-100">Thứ Bảy, ngày 24 tháng 10 năm 2026</p>
         <p id="wedding-date-lunar" class="text-xs md:text-sm text-neutral-300 italic">Ngày 15 tháng 09 năm Bính Ngọ (Âm lịch)</p>
       </div>
 
-      <div class="mt-8">
-        <a href="#events" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-sky-600/90 hover:bg-sky-600 text-white text-sm font-semibold backdrop-blur-sm transition shadow-lg animate-float">
+      <div class="mt-6 sm:mt-8">
+        <a href="#events" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-sky-600/90 hover:bg-sky-600 text-white text-sm font-semibold backdrop-blur-sm transition shadow-xl animate-float">
           <span>Xem Thông Tin Lễ Cưới</span>
           <i data-lucide="chevron-down" class="w-4 h-4"></i>
         </a>
