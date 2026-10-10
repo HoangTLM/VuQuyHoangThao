@@ -219,8 +219,11 @@ function initRsvpAndGuestbook() {
       return;
     }
 
+    const isAdminUnlocked = sessionStorage.getItem("wedding_admin_unlocked") === "true";
+
     wishesListContainer.innerHTML = combined
       .map((item) => {
+        const safeId = escapeHtml(item.id || "");
         const safeName = escapeHtml(item.name || "Khách mời");
         const safeMsg = escapeHtml(item.message || "");
         const safeTime = escapeHtml(item.time || "Vừa xong");
@@ -235,7 +238,14 @@ function initRsvpAndGuestbook() {
               </div>
               <span class="font-semibold text-neutral-800 text-sm md:text-base truncate">${safeName}</span>
             </div>
-            <span class="text-xs text-neutral-400 shrink-0">${safeTime}</span>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-xs text-neutral-400">${safeTime}</span>
+              ${
+                isAdminUnlocked && safeId
+                  ? `<button onclick="deleteWishItem('${safeId}')" class="px-2 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-semibold transition" title="Xóa lời chúc này">Xóa</button>`
+                  : ""
+              }
+            </div>
           </div>
           <p class="text-neutral-600 text-sm leading-relaxed pl-11 break-words">${safeMsg}</p>
         </div>
@@ -243,6 +253,8 @@ function initRsvpAndGuestbook() {
       })
       .join("");
   }
+
+  window.refreshPublicWishesView = renderWishes;
 
   // Lắng nghe dữ liệu lời chúc thời gian thực từ Cloud Firestore
   if (isFirebaseReady && db) {
@@ -377,6 +389,7 @@ function verifyAdminPin() {
   if (enteredPin === correctPin) {
     sessionStorage.setItem("wedding_admin_unlocked", "true");
     showAdminDashboard();
+    window.refreshPublicWishesView?.();
   } else {
     showToast("Mã PIN chưa chính xác!");
   }
@@ -532,6 +545,7 @@ function renderAdminRsvpList() {
 
   container.innerHTML = filtered
     .map((item) => {
+      const safeId = escapeHtml(item.id || "");
       const isAttending = String(item.attending || "").includes("Chắc chắn");
       const badgeClass = isAttending
         ? "bg-emerald-100 text-emerald-800"
@@ -541,8 +555,8 @@ function renderAdminRsvpList() {
         : "bg-sky-50 text-sky-700 border-sky-200";
 
       return `
-      <div class="p-3.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-        <div class="space-y-1">
+      <div class="p-3.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="space-y-1 flex-1 min-w-0">
           <div class="flex flex-wrap items-center gap-2">
             <span class="font-bold text-sm text-neutral-800">${escapeHtml(item.name)}</span>
             <span class="px-2 py-0.5 rounded-full border text-[11px] font-medium ${sideBadgeClass}">
@@ -556,7 +570,14 @@ function renderAdminRsvpList() {
             ${item.phone ? `<span>📞 SĐT: <strong>${escapeHtml(item.phone)}</strong></span>` : ""}
             <span>🕒 ${escapeHtml(item.time || "")}</span>
           </div>
-          ${item.note ? `<p class="text-neutral-700 bg-white px-2.5 py-1.5 rounded-lg border border-neutral-200/60 mt-1">💬 Ghi chú: ${escapeHtml(item.note)}</p>` : ""}
+          ${item.note ? `<p class="text-neutral-700 bg-white px-2.5 py-1.5 rounded-lg border border-neutral-200/60 mt-1 break-words">💬 Ghi chú: ${escapeHtml(item.note)}</p>` : ""}
+        </div>
+        <div class="shrink-0 flex justify-end">
+          <button onclick="deleteRsvpItem('${safeId}')" 
+                  class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200/80 font-semibold text-xs transition flex items-center gap-1"
+                  title="Xóa xác nhận tham dự này">
+            <span>🗑️ Xóa</span>
+          </button>
         </div>
       </div>
     `;
@@ -578,18 +599,73 @@ function renderAdminWishesList() {
   }
 
   container.innerHTML = adminWishesData
-    .map(
-      (item) => `
-      <div class="p-3.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/50 space-y-1 text-xs">
-        <div class="flex items-center justify-between">
-          <span class="font-bold text-sm text-neutral-800">${escapeHtml(item.name)}</span>
-          <span class="text-neutral-400">${escapeHtml(item.time || "")}</span>
+    .map((item) => {
+      const safeId = escapeHtml(item.id || "");
+      return `
+      <div class="p-3.5 rounded-2xl border border-neutral-200/80 bg-neutral-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="space-y-1 flex-1 min-w-0">
+          <div class="flex items-center justify-between sm:justify-start gap-3">
+            <span class="font-bold text-sm text-neutral-800">${escapeHtml(item.name)}</span>
+            <span class="text-neutral-400">${escapeHtml(item.time || "")}</span>
+          </div>
+          <p class="text-neutral-600 leading-relaxed break-words">${escapeHtml(item.message)}</p>
         </div>
-        <p class="text-neutral-600 leading-relaxed">${escapeHtml(item.message)}</p>
+        <div class="shrink-0 flex justify-end">
+          <button onclick="deleteWishItem('${safeId}')" 
+                  class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200/80 font-semibold text-xs transition flex items-center gap-1"
+                  title="Xóa lời chúc này">
+            <span>🗑️ Xóa</span>
+          </button>
+        </div>
       </div>
-    `
-    )
+    `;
+    })
     .join("");
+}
+
+async function deleteRsvpItem(docId) {
+  const target = adminRsvpsData.find((r) => r.id === docId);
+  const label = target?.name ? ` của "${target.name}"` : "";
+  if (!window.confirm(`Bạn có chắc muốn xóa xác nhận tham dự${label} không?`)) return;
+
+  if (isFirebaseReady && db && docId) {
+    try {
+      await db.collection("rsvps").doc(docId).delete();
+      showToast(`Đã xóa xác nhận tham dự${label}!`);
+    } catch (err) {
+      console.error("Lỗi khi xóa RSVP trên Firestore:", err);
+      showToast("Không thể xóa (kiểm tra quyền allow delete trong Firestore Rules)!");
+    }
+  } else {
+    adminRsvpsData = adminRsvpsData.filter((r) => r.id !== docId);
+    localStorage.setItem("wedding_rsvp_list", JSON.stringify(adminRsvpsData));
+    updateAdminStats();
+    renderAdminRsvpList();
+    showToast(`Đã xóa xác nhận tham dự${label}!`);
+  }
+}
+
+async function deleteWishItem(docId) {
+  const target = adminWishesData.find((w) => w.id === docId) || firestoreWishes.find((w) => w.id === docId);
+  const label = target?.name ? ` của "${target.name}"` : "";
+  if (!window.confirm(`Bạn có chắc muốn xóa lời chúc${label} không?`)) return;
+
+  if (isFirebaseReady && db && docId) {
+    try {
+      await db.collection("wishes").doc(docId).delete();
+      showToast(`Đã xóa lời chúc${label}!`);
+    } catch (err) {
+      console.error("Lỗi khi xóa lời chúc trên Firestore:", err);
+      showToast("Không thể xóa (kiểm tra quyền allow delete trong Firestore Rules)!");
+    }
+  } else {
+    adminWishesData = adminWishesData.filter((w) => w.id !== docId);
+    localStorage.setItem("wedding_wishes_list", JSON.stringify(adminWishesData));
+    updateAdminStats();
+    renderAdminWishesList();
+    window.refreshPublicWishesView?.();
+    showToast(`Đã xóa lời chúc${label}!`);
+  }
 }
 
 function exportRsvpToCsv() {
@@ -649,6 +725,8 @@ window.closeAdminModal = closeAdminModal;
 window.verifyAdminPin = verifyAdminPin;
 window.switchAdminTab = switchAdminTab;
 window.renderAdminRsvpList = renderAdminRsvpList;
+window.deleteRsvpItem = deleteRsvpItem;
+window.deleteWishItem = deleteWishItem;
 window.exportRsvpToCsv = exportRsvpToCsv;
 
 document.addEventListener("DOMContentLoaded", initRsvpAndGuestbook);
