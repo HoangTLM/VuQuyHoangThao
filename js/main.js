@@ -236,7 +236,9 @@ function handleAddToCalendar(title, desc, location) {
   window.open(googleCalendarUrl, "_blank");
 }
 
-// CÔNG CỤ TẠO LINK MỜI CÁ NHÂN HÓA (NẰM TRONG BẢNG QUẢN TRỊ ADMIN)
+// CÔNG CỤ TẠO LINK MỜI CÁ NHÂN HÓA (ĐƠN LẺ & HÀNG LOẠT TRONG BẢNG QUẢN TRỊ ADMIN)
+let generatedBulkList = [];
+
 function openLinkGenerator() {
   window.openAdminModal?.();
   if (sessionStorage.getItem("wedding_admin_unlocked") === "true") {
@@ -246,6 +248,15 @@ function openLinkGenerator() {
 
 function closeLinkGenerator() {
   window.closeAdminModal?.();
+}
+
+function buildGuestInviteData(rawName) {
+  const cleanName = rawName.trim();
+  const baseUrl = window.location.origin + window.location.pathname;
+  const encodedName = encodeURIComponent(cleanName);
+  const fullLink = `${baseUrl}?to=${encodedName}`;
+  const messageText = `Trân trọng kính mời ${cleanName} đến chung vui trong ngày Lễ Vu Quy của Vi Thảo & Minh Hoàng. Xem thiệp mời online tại: ${fullLink}`;
+  return { name: cleanName, link: fullLink, message: messageText };
 }
 
 function generatePersonalizedLink() {
@@ -260,17 +271,13 @@ function generatePersonalizedLink() {
     return;
   }
 
-  // Lấy baseUrl hiện tại (loại bỏ params cũ)
-  const baseUrl = window.location.origin + window.location.pathname;
-  const encodedName = encodeURIComponent(name);
-  const fullLink = `${baseUrl}?to=${encodedName}`;
-  const messageText = `Trân trọng kính mời ${name} đến chung vui trong ngày Lễ Vu Quy của Vi Thảo & Minh Hoàng. Xem thiệp mời online tại: ${fullLink}`;
+  const data = buildGuestInviteData(name);
 
-  if (linkOutput) linkOutput.value = fullLink;
-  if (msgOutput) msgOutput.value = messageText;
+  if (linkOutput) linkOutput.value = data.link;
+  if (msgOutput) msgOutput.value = data.message;
   if (resultContainer) resultContainer.classList.remove("hidden");
 
-  copyToClipboard(fullLink, `Đã tạo & sao chép link mời: "${name}"`);
+  copyToClipboard(data.link, `Đã tạo & sao chép link mời: "${data.name}"`);
 }
 
 function copyGeneratedMessage() {
@@ -287,6 +294,142 @@ function testGeneratedLink() {
   }
 }
 
+function escapeBulkHtml(str) {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function generateBulkLinks() {
+  const textarea = document.getElementById("bulk-guest-names");
+  const rawText = textarea?.value || "";
+  const lines = rawText
+    .split(/\r?\n/)
+    .map((line) => line.replace(/^\s*\d+[\.\)\-]\s*/, "").trim())
+    .filter((line) => line.length > 0);
+
+  if (lines.length === 0) {
+    window.showToast?.("Vui lòng nhập ít nhất 1 tên khách mời (mỗi dòng 1 tên)!");
+    return;
+  }
+
+  generatedBulkList = lines.map((name, idx) => {
+    const info = buildGuestInviteData(name);
+    return {
+      index: idx + 1,
+      name: info.name,
+      link: info.link,
+      message: info.message,
+      copiedLink: false,
+      copiedMsg: false
+    };
+  });
+
+  const resultContainer = document.getElementById("bulk-result-container");
+  const badge = document.getElementById("bulk-count-badge");
+  if (badge) badge.textContent = `Đã tạo ${generatedBulkList.length} link mời`;
+  if (resultContainer) resultContainer.classList.remove("hidden");
+
+  renderBulkLinksList();
+  window.showToast?.(`Đã tạo thành công ${generatedBulkList.length} link mời khách!`);
+}
+
+function renderBulkLinksList() {
+  const listEl = document.getElementById("bulk-links-list");
+  if (!listEl) return;
+
+  listEl.innerHTML = generatedBulkList
+    .map((item, idx) => {
+      const linkBtnClass = item.copiedLink
+        ? "bg-emerald-100 text-emerald-800 border-emerald-200"
+        : "bg-white hover:bg-sky-50 text-sky-700 border-sky-200";
+      const msgBtnClass = item.copiedMsg
+        ? "bg-emerald-600 text-white"
+        : "bg-sky-600 hover:bg-sky-700 text-white";
+
+      return `
+      <div class="p-3 rounded-xl bg-white border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+        <div class="min-w-0 flex-1">
+          <div class="font-bold text-neutral-800 text-sm truncate">
+            ${item.index}. ${escapeBulkHtml(item.name)}
+          </div>
+          <div class="font-mono text-[11px] text-neutral-500 truncate mt-0.5 select-all">
+            ${escapeBulkHtml(item.link)}
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-1.5 shrink-0">
+          <button onclick="copyBulkItemLink(${idx})" 
+                  class="px-2.5 py-1.5 rounded-lg border font-semibold transition ${linkBtnClass}">
+            ${item.copiedLink ? "✓ Đã Copy Link" : "Copy Link"}
+          </button>
+          <button onclick="copyBulkItemMessage(${idx})" 
+                  class="px-2.5 py-1.5 rounded-lg font-semibold shadow-sm transition ${msgBtnClass}">
+            ${item.copiedMsg ? "✓ Đã Copy Lời Mời" : "Copy Lời Mời"}
+          </button>
+          <a href="${escapeBulkHtml(item.link)}" target="_blank" rel="noopener noreferrer"
+             class="px-2.5 py-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold transition">
+            Xem
+          </a>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+}
+
+function copyBulkItemLink(idx) {
+  const item = generatedBulkList[idx];
+  if (!item) return;
+  item.copiedLink = true;
+  renderBulkLinksList();
+  copyToClipboard(item.link, `Đã sao chép link của "${item.name}"!`);
+}
+
+function copyBulkItemMessage(idx) {
+  const item = generatedBulkList[idx];
+  if (!item) return;
+  item.copiedMsg = true;
+  renderBulkLinksList();
+  copyToClipboard(item.message, `Đã sao chép lời mời của "${item.name}"!`);
+}
+
+function copyAllBulkLinks() {
+  if (generatedBulkList.length === 0) return;
+  const text = generatedBulkList.map((item) => `${item.index}. ${item.name}\n${item.link}`).join("\n\n");
+  copyToClipboard(text, `Đã sao chép toàn bộ ${generatedBulkList.length} link mời!`);
+}
+
+function exportBulkLinksToCsv() {
+  if (generatedBulkList.length === 0) {
+    window.showToast?.("Chưa có danh sách link để xuất file!");
+    return;
+  }
+
+  const escapeCsvCell = (val) => `"${String(val ?? "").replace(/"/g, '""')}"`;
+  const headers = ["STT", "Tên Khách Mời", "Đường Link Thiệp Riêng", "Mẫu Tin Nhắn Gửi Zalo / Messenger"];
+
+  let csvContent = "\uFEFF"; // BOM UTF-8 hiển thị chuẩn tiếng Việt trên Excel
+  csvContent += headers.map(escapeCsvCell).join(",") + "\n";
+  generatedBulkList.forEach((item) => {
+    csvContent += [item.index, item.name, item.link, item.message].map(escapeCsvCell).join(",") + "\n";
+  });
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Danh_Sach_Link_Moi_Khach_ViThao_MinhHoang.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  window.showToast?.("Đã tải xuống file Excel (CSV) danh sách link mời!");
+}
+
 window.copyToClipboard = copyToClipboard;
 window.handleAddToCalendar = handleAddToCalendar;
 window.openLinkGenerator = openLinkGenerator;
@@ -294,3 +437,9 @@ window.closeLinkGenerator = closeLinkGenerator;
 window.generatePersonalizedLink = generatePersonalizedLink;
 window.copyGeneratedMessage = copyGeneratedMessage;
 window.testGeneratedLink = testGeneratedLink;
+window.generateBulkLinks = generateBulkLinks;
+window.copyBulkItemLink = copyBulkItemLink;
+window.copyBulkItemMessage = copyBulkItemMessage;
+window.copyAllBulkLinks = copyAllBulkLinks;
+window.exportBulkLinksToCsv = exportBulkLinksToCsv;
+

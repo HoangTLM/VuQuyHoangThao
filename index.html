@@ -580,37 +580,33 @@
           <!-- Render động từ js/rsvp.js -->
         </div>
 
-        <!-- Tab 3: Tạo Link Gửi Khách Cá Nhân Hóa -->
-        <div id="admin-linkgen-panel" class="hidden flex-1 overflow-y-auto pr-1">
-          <div class="bg-sky-50/50 border border-sky-100 rounded-2xl p-5 sm:p-6 space-y-4">
+        <!-- Tab 3: Tạo Link Gửi Khách Cá Nhân Hóa (Đơn lẻ & Hàng loạt) -->
+        <div id="admin-linkgen-panel" class="hidden flex-1 overflow-y-auto pr-1 space-y-5">
+          <!-- Khối 1: Tạo nhanh 1 khách -->
+          <div class="bg-sky-50/50 border border-sky-100 rounded-2xl p-4 sm:p-5 space-y-3.5">
             <div>
-              <h4 class="font-bold text-neutral-800 text-sm mb-1">Tạo Link Thiệp Có Tên Riêng Của Khách</h4>
-              <p class="text-xs text-neutral-500">Nhập tên hoặc cách xưng hô để tự động tạo đường dẫn thiệp và mẫu lời mời gửi Zalo / Messenger.</p>
+              <h4 class="font-bold text-neutral-800 text-sm mb-0.5">1. Tạo Nhanh Link Cho 1 Khách</h4>
+              <p class="text-xs text-neutral-500">Nhập tên hoặc cách xưng hô để tạo nhanh đường dẫn và tự động sao chép.</p>
             </div>
 
-            <div>
-              <label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                Tên Khách Mời (Xưng hô)
-              </label>
-              <div class="flex gap-2">
-                <input type="text" id="gen-guest-name" placeholder="Ví dụ: Anh Nam & Chị Lan, Bạn Minh..." 
-                       class="flex-1 px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-white"
-                       onkeydown="if(event.key === 'Enter') generatePersonalizedLink()" />
-                <button onclick="generatePersonalizedLink()" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition shrink-0">
-                  Tạo Link
-                </button>
-              </div>
+            <div class="flex gap-2">
+              <input type="text" id="gen-guest-name" placeholder="Ví dụ: Anh Nam & Chị Lan, Bạn Minh..." 
+                     class="flex-1 px-4 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-white"
+                     onkeydown="if(event.key === 'Enter') generatePersonalizedLink()" />
+              <button onclick="generatePersonalizedLink()" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition shrink-0">
+                Tạo Link
+              </button>
             </div>
 
-            <!-- Kết quả sau khi tạo -->
-            <div id="gen-result-container" class="hidden space-y-4 pt-4 border-t border-sky-200/60">
+            <!-- Kết quả sau khi tạo 1 khách -->
+            <div id="gen-result-container" class="hidden space-y-3 pt-3 border-t border-sky-200/60">
               <div>
                 <label class="block text-xs font-semibold text-neutral-600 mb-1">Đường link thiệp riêng:</label>
                 <div class="flex gap-2">
                   <input type="text" id="gen-link-output" readonly 
-                         class="flex-1 px-3 py-2.5 rounded-xl border border-sky-200 text-xs font-mono bg-white text-sky-900 select-all" />
+                         class="flex-1 px-3 py-2 rounded-xl border border-sky-200 text-xs font-mono bg-white text-sky-900 select-all" />
                   <button onclick="copyToClipboard(document.getElementById('gen-link-output').value, 'Đã sao chép link mời!')" 
-                          class="px-3.5 py-2.5 bg-white hover:bg-neutral-100 border border-neutral-200 rounded-xl text-xs font-semibold text-neutral-700 shrink-0 transition">
+                          class="px-3.5 py-2 bg-white hover:bg-neutral-100 border border-neutral-200 rounded-xl text-xs font-semibold text-neutral-700 shrink-0 transition">
                     Sao Chép Link
                   </button>
                 </div>
@@ -618,20 +614,61 @@
 
               <div>
                 <label class="block text-xs font-semibold text-neutral-600 mb-1">Mẫu tin nhắn gửi Zalo / Messenger:</label>
-                <textarea id="gen-message-output" rows="3" readonly
-                          class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs bg-white text-neutral-700 select-all leading-relaxed"></textarea>
-                <div class="flex gap-2 mt-2.5">
+                <textarea id="gen-message-output" rows="2" readonly
+                          class="w-full px-3 py-2 rounded-xl border border-neutral-200 text-xs bg-white text-neutral-700 select-all leading-relaxed"></textarea>
+                <div class="flex gap-2 mt-2">
                   <button onclick="copyGeneratedMessage()" 
-                          class="flex-1 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition">
+                          class="flex-1 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition">
                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                     <span>Sao Chép Tin Nhắn & Link</span>
                   </button>
                   <button onclick="testGeneratedLink()" 
-                          class="px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold flex items-center justify-center gap-1 transition">
+                          class="px-4 py-2 rounded-xl bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold flex items-center justify-center gap-1 transition">
                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                     <span>Xem Thử</span>
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Khối 2: Tạo link hàng loạt (Bulk Generator) -->
+          <div class="bg-neutral-50 border border-neutral-200/80 rounded-2xl p-4 sm:p-5 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h4 class="font-bold text-neutral-800 text-sm mb-0.5">2. Tạo Link Hàng Loạt (Nhiều Khách Cùng Lúc)</h4>
+                <p class="text-xs text-neutral-500">Nhập hoặc dán danh sách từ Excel / Google Sheets (mỗi dòng 1 tên khách mời).</p>
+              </div>
+              <button onclick="generateBulkLinks()" class="px-4 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-semibold text-xs shadow-sm transition shrink-0">
+                ⚡ Tạo Danh Sách Link
+              </button>
+            </div>
+
+            <div>
+              <textarea id="bulk-guest-names" rows="5" 
+                        placeholder="Ví dụ (mỗi dòng 1 khách mời):&#10;Anh Nam & Chị Lan&#10;Bạn Minh Tuấn&#10;Gia đình Chú Hùng&#10;Chị Hương"
+                        class="w-full px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-xs sm:text-sm bg-white leading-relaxed"></textarea>
+            </div>
+
+            <!-- Kết quả tạo hàng loạt -->
+            <div id="bulk-result-container" class="hidden space-y-3 pt-3 border-t border-neutral-200">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span id="bulk-count-badge" class="text-xs font-bold text-sky-800 bg-sky-100 px-3 py-1 rounded-full">
+                  Đã tạo 0 link mời
+                </span>
+                <div class="flex flex-wrap gap-2">
+                  <button onclick="copyAllBulkLinks()" class="px-3 py-1.5 rounded-xl bg-white hover:bg-neutral-100 border border-neutral-300 text-neutral-700 text-xs font-semibold transition">
+                    📋 Copy Toàn Bộ (Tên + Link)
+                  </button>
+                  <button onclick="exportBulkLinksToCsv()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition">
+                    📥 Xuất Excel (CSV) Danh Sách Link
+                  </button>
+                </div>
+              </div>
+
+              <!-- Danh sách từng dòng khách mời -->
+              <div id="bulk-links-list" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+                <!-- Render động từ js/main.js -->
               </div>
             </div>
           </div>
