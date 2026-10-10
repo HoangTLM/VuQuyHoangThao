@@ -647,48 +647,67 @@ function renderAdminWishesList() {
     .join("");
 }
 
+async function deleteFirestoreDocWithFallback(collectionName, docId) {
+  if (!docId) return;
+  const fbConfig = window.WEDDING_CONFIG?.firebaseConfig;
+  if (isFirebaseReady && db) {
+    try {
+      await db.collection(collectionName).doc(docId).delete();
+      return;
+    } catch (sdkErr) {
+      console.warn(`SDK delete lỗi trên ${collectionName}/${docId}, thử REST API:`, sdkErr);
+    }
+  }
+  if (fbConfig?.projectId && fbConfig?.apiKey) {
+    const url = `https://firestore.googleapis.com/v1/projects/${fbConfig.projectId}/databases/(default)/documents/${collectionName}/${encodeURIComponent(docId)}?key=${fbConfig.apiKey}`;
+    const res = await fetch(url, { method: "DELETE" });
+    if (!res.ok) {
+      throw new Error(`REST DELETE HTTP ${res.status}`);
+    }
+  }
+}
+
 async function deleteRsvpItem(docId) {
   const target = adminRsvpsData.find((r) => r.id === docId);
   const label = target?.name ? ` của "${target.name}"` : "";
-  if (!window.confirm(`Bạn có chắc muốn xóa xác nhận tham dự${label} không?`)) return;
 
-  if (isFirebaseReady && db && docId) {
-    try {
-      await db.collection("rsvps").doc(docId).delete();
-      showToast(`Đã xóa xác nhận tham dự${label}!`);
-    } catch (err) {
-      console.error("Lỗi khi xóa RSVP trên Firestore:", err);
-      showToast("Không thể xóa (kiểm tra quyền allow delete trong Firestore Rules)!");
+  try {
+    if (docId) {
+      await deleteFirestoreDocWithFallback("rsvps", docId);
     }
-  } else {
-    adminRsvpsData = adminRsvpsData.filter((r) => r.id !== docId);
-    localStorage.setItem("wedding_rsvp_list", JSON.stringify(adminRsvpsData));
+    adminRsvpsData = adminRsvpsData.filter((r) => (docId ? r.id !== docId : r !== target));
+    try {
+      localStorage.setItem("wedding_rsvp_list", JSON.stringify(adminRsvpsData));
+    } catch (e) {}
     updateAdminStats();
     renderAdminRsvpList();
     showToast(`Đã xóa xác nhận tham dự${label}!`);
+  } catch (err) {
+    console.error("Lỗi khi xóa RSVP:", err);
+    showToast("Không thể xóa (vui lòng tải lại trang F5 rồi thử lại)!");
   }
 }
 
 async function deleteWishItem(docId) {
   const target = adminWishesData.find((w) => w.id === docId) || firestoreWishes.find((w) => w.id === docId);
   const label = target?.name ? ` của "${target.name}"` : "";
-  if (!window.confirm(`Bạn có chắc muốn xóa lời chúc${label} không?`)) return;
 
-  if (isFirebaseReady && db && docId) {
-    try {
-      await db.collection("wishes").doc(docId).delete();
-      showToast(`Đã xóa lời chúc${label}!`);
-    } catch (err) {
-      console.error("Lỗi khi xóa lời chúc trên Firestore:", err);
-      showToast("Không thể xóa (kiểm tra quyền allow delete trong Firestore Rules)!");
+  try {
+    if (docId) {
+      await deleteFirestoreDocWithFallback("wishes", docId);
     }
-  } else {
-    adminWishesData = adminWishesData.filter((w) => w.id !== docId);
-    localStorage.setItem("wedding_wishes_list", JSON.stringify(adminWishesData));
+    adminWishesData = adminWishesData.filter((w) => (docId ? w.id !== docId : w !== target));
+    firestoreWishes = firestoreWishes.filter((w) => (docId ? w.id !== docId : w !== target));
+    try {
+      localStorage.removeItem("wedding_wishes_list");
+    } catch (e) {}
     updateAdminStats();
     renderAdminWishesList();
     window.refreshPublicWishesView?.();
     showToast(`Đã xóa lời chúc${label}!`);
+  } catch (err) {
+    console.error("Lỗi khi xóa lời chúc:", err);
+    showToast("Không thể xóa (vui lòng tải lại trang F5 rồi thử lại)!");
   }
 }
 
