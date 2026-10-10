@@ -500,22 +500,27 @@ function switchAdminTab(tab) {
   currentAdminTab = tab;
   const btnRsvp = document.getElementById("tab-btn-rsvp");
   const btnWishes = document.getElementById("tab-btn-wishes");
+  const btnLinkgen = document.getElementById("tab-btn-linkgen");
   const listRsvp = document.getElementById("admin-rsvp-list");
   const listWishes = document.getElementById("admin-wishes-list");
+  const panelLinkgen = document.getElementById("admin-linkgen-panel");
   const filterSelect = document.getElementById("admin-rsvp-filter");
 
-  if (tab === "rsvp") {
-    btnRsvp.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm transition";
-    btnWishes.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 hover:text-neutral-800 transition";
-    listRsvp?.classList.remove("hidden");
-    listWishes?.classList.add("hidden");
-    filterSelect?.classList.remove("hidden");
-  } else {
-    btnWishes.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm transition";
-    btnRsvp.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 hover:text-neutral-800 transition";
-    listWishes?.classList.remove("hidden");
-    listRsvp?.classList.add("hidden");
-    filterSelect?.classList.add("hidden");
+  const activeClass = "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm transition";
+  const inactiveClass = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 hover:text-neutral-800 transition";
+
+  if (btnRsvp) btnRsvp.className = tab === "rsvp" ? activeClass : inactiveClass;
+  if (btnWishes) btnWishes.className = tab === "wishes" ? activeClass : inactiveClass;
+  if (btnLinkgen) btnLinkgen.className = tab === "linkgen" ? activeClass : inactiveClass;
+
+  listRsvp?.classList.toggle("hidden", tab !== "rsvp");
+  listWishes?.classList.toggle("hidden", tab !== "wishes");
+  panelLinkgen?.classList.toggle("hidden", tab !== "linkgen");
+  filterSelect?.classList.toggle("hidden", tab !== "rsvp");
+
+  if (tab === "linkgen") {
+    const input = document.getElementById("gen-guest-name");
+    if (input) setTimeout(() => input.focus(), 80);
   }
 }
 

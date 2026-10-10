@@ -448,12 +448,8 @@
         <i data-lucide="heart" class="w-4 h-4 fill-sky-600 text-sky-600"></i>
       </div>
 
-      <!-- Tiện ích tạo link gửi khách & Quản trị cho dâu rể -->
+      <!-- Nút mở bảng Quản trị dành cho dâu rể -->
       <div class="mb-5 flex flex-wrap items-center justify-center gap-2.5">
-        <button onclick="openLinkGenerator()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-semibold border border-sky-200 shadow-sm transition">
-          <i data-lucide="link" class="w-3.5 h-3.5"></i>
-          <span>💌 Tạo Link Gửi Khách</span>
-        </button>
         <button onclick="openAdminModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-neutral-50 hover:bg-neutral-100 text-neutral-600 text-xs font-semibold border border-neutral-200 shadow-sm transition">
           <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
           <span>📊 Quản Lý RSVP & Lời Chúc</span>
@@ -496,74 +492,6 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL TẠO LINK CÁ NHÂN HÓA DÀNH CHO DÂU RỂ                               -->
-  <!-- ========================================================================= -->
-  <div id="link-generator-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl border border-sky-100 relative">
-      <button onclick="closeLinkGenerator()" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 p-2" title="Đóng">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="text-center mb-6">
-        <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center mx-auto mb-3">
-          <i data-lucide="user-check" class="w-6 h-6"></i>
-        </div>
-        <h3 class="font-serif-title text-xl font-bold text-neutral-800">Tạo Link Mời Khách Nhanh</h3>
-        <p class="text-xs text-neutral-500 mt-1">Nhập tên khách mời để tự động tạo link thiệp có tên riêng</p>
-      </div>
-
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-            Tên Khách Mời (Xưng hô)
-          </label>
-          <div class="flex gap-2">
-            <input type="text" id="gen-guest-name" placeholder="Ví dụ: Anh Nam & Chị Lan, Bạn Minh..." 
-                   class="flex-1 px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-neutral-50"
-                   onkeydown="if(event.key === 'Enter') generatePersonalizedLink()" />
-            <button onclick="generatePersonalizedLink()" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition shrink-0">
-              Tạo Link
-            </button>
-          </div>
-        </div>
-
-        <!-- Kết quả sau khi tạo -->
-        <div id="gen-result-container" class="hidden space-y-4 pt-3 border-t border-neutral-100">
-          <div>
-            <label class="block text-xs font-semibold text-neutral-600 mb-1">Đường link thiệp riêng:</label>
-            <div class="flex gap-2">
-              <input type="text" id="gen-link-output" readonly 
-                     class="flex-1 px-3 py-2 rounded-lg border border-neutral-200 text-xs font-mono bg-sky-50 text-sky-900 select-all" />
-              <button onclick="copyToClipboard(document.getElementById('gen-link-output').value, 'Đã sao chép link mời!')" 
-                      class="px-3 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-lg text-xs font-semibold text-neutral-700 shrink-0">
-                Sao Chép Link
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-neutral-600 mb-1">Mẫu tin nhắn gửi Zalo / Messenger:</label>
-            <textarea id="gen-message-output" rows="3" readonly
-                      class="w-full px-3 py-2 rounded-lg border border-neutral-200 text-xs bg-neutral-50 text-neutral-700 select-all leading-relaxed"></textarea>
-            <div class="flex gap-2 mt-2">
-              <button onclick="copyGeneratedMessage()" 
-                      class="flex-1 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm">
-                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                <span>Sao Chép Tin Nhắn & Link</span>
-              </button>
-              <button onclick="testGeneratedLink()" 
-                      class="px-4 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold flex items-center justify-center gap-1">
-                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                <span>Xem Thử</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
   <!-- MODAL QUẢN TRỊ KHÁCH MỜI & LỜI CHÚC (ADMIN DASHBOARD)                    -->
   <!-- ========================================================================= -->
   <div id="admin-modal" class="fixed inset-0 z-[999999] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4">
@@ -578,7 +506,7 @@
           <i data-lucide="lock" class="w-7 h-7"></i>
         </div>
         <h3 class="font-serif-title text-xl font-bold text-neutral-800">Quản Lý Khách Mời & Lời Chúc</h3>
-        <p class="text-xs text-neutral-500 mt-1 mb-6">Nhập mã PIN dành riêng cho Cô Dâu & Chú Rể để xem thống kê</p>
+        <p class="text-xs text-neutral-500 mt-1 mb-6">Nhập mã PIN dành riêng cho Cô Dâu & Chú Rể để xem thống kê và tạo link mời</p>
         <div class="flex gap-2">
           <input type="password" id="admin-pin-input" placeholder="Nhập mã PIN..." 
                  class="flex-1 px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm text-center tracking-widest bg-neutral-50"
@@ -631,12 +559,15 @@
 
         <!-- Tabs chuyển đổi -->
         <div class="flex items-center justify-between gap-2 mb-3 shrink-0 flex-wrap">
-          <div class="flex gap-1.5 bg-neutral-100 p-1 rounded-xl">
+          <div class="flex flex-wrap gap-1.5 bg-neutral-100 p-1 rounded-xl">
             <button id="tab-btn-rsvp" onclick="switchAdminTab('rsvp')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm transition">
               Danh Sách RSVP
             </button>
             <button id="tab-btn-wishes" onclick="switchAdminTab('wishes')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 hover:text-neutral-800 transition">
               Sổ Lưu Bút Lời Chúc
+            </button>
+            <button id="tab-btn-linkgen" onclick="switchAdminTab('linkgen')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-neutral-600 hover:text-neutral-800 transition">
+              💌 Tạo Link Gửi Khách
             </button>
           </div>
 
@@ -655,6 +586,63 @@
         </div>
         <div id="admin-wishes-list" class="hidden flex-1 overflow-y-auto space-y-2.5 pr-1">
           <!-- Render động từ js/rsvp.js -->
+        </div>
+
+        <!-- Tab 3: Tạo Link Gửi Khách Cá Nhân Hóa -->
+        <div id="admin-linkgen-panel" class="hidden flex-1 overflow-y-auto pr-1">
+          <div class="bg-sky-50/50 border border-sky-100 rounded-2xl p-5 sm:p-6 space-y-4">
+            <div>
+              <h4 class="font-bold text-neutral-800 text-sm mb-1">Tạo Link Thiệp Có Tên Riêng Của Khách</h4>
+              <p class="text-xs text-neutral-500">Nhập tên hoặc cách xưng hô để tự động tạo đường dẫn thiệp và mẫu lời mời gửi Zalo / Messenger.</p>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Tên Khách Mời (Xưng hô)
+              </label>
+              <div class="flex gap-2">
+                <input type="text" id="gen-guest-name" placeholder="Ví dụ: Anh Nam & Chị Lan, Bạn Minh..." 
+                       class="flex-1 px-4 py-3 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-white"
+                       onkeydown="if(event.key === 'Enter') generatePersonalizedLink()" />
+                <button onclick="generatePersonalizedLink()" class="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md transition shrink-0">
+                  Tạo Link
+                </button>
+              </div>
+            </div>
+
+            <!-- Kết quả sau khi tạo -->
+            <div id="gen-result-container" class="hidden space-y-4 pt-4 border-t border-sky-200/60">
+              <div>
+                <label class="block text-xs font-semibold text-neutral-600 mb-1">Đường link thiệp riêng:</label>
+                <div class="flex gap-2">
+                  <input type="text" id="gen-link-output" readonly 
+                         class="flex-1 px-3 py-2.5 rounded-xl border border-sky-200 text-xs font-mono bg-white text-sky-900 select-all" />
+                  <button onclick="copyToClipboard(document.getElementById('gen-link-output').value, 'Đã sao chép link mời!')" 
+                          class="px-3.5 py-2.5 bg-white hover:bg-neutral-100 border border-neutral-200 rounded-xl text-xs font-semibold text-neutral-700 shrink-0 transition">
+                    Sao Chép Link
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-neutral-600 mb-1">Mẫu tin nhắn gửi Zalo / Messenger:</label>
+                <textarea id="gen-message-output" rows="3" readonly
+                          class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 text-xs bg-white text-neutral-700 select-all leading-relaxed"></textarea>
+                <div class="flex gap-2 mt-2.5">
+                  <button onclick="copyGeneratedMessage()" 
+                          class="flex-1 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>Sao Chép Tin Nhắn & Link</span>
+                  </button>
+                  <button onclick="testGeneratedLink()" 
+                          class="px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold flex items-center justify-center gap-1 transition">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    <span>Xem Thử</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

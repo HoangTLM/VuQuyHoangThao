@@ -236,23 +236,16 @@ function handleAddToCalendar(title, desc, location) {
   window.open(googleCalendarUrl, "_blank");
 }
 
-// CÔNG CỤ TẠO LINK MỜI CÁ NHÂN HÓA (DÀNH CHO DÂU RỂ)
+// CÔNG CỤ TẠO LINK MỜI CÁ NHÂN HÓA (NẰM TRONG BẢNG QUẢN TRỊ ADMIN)
 function openLinkGenerator() {
-  const modal = document.getElementById("link-generator-modal");
-  if (modal) {
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    const input = document.getElementById("gen-guest-name");
-    if (input) setTimeout(() => input.focus(), 100);
+  window.openAdminModal?.();
+  if (sessionStorage.getItem("wedding_admin_unlocked") === "true") {
+    window.switchAdminTab?.("linkgen");
   }
 }
 
 function closeLinkGenerator() {
-  const modal = document.getElementById("link-generator-modal");
-  if (modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
+  window.closeAdminModal?.();
 }
 
 function generatePersonalizedLink() {
