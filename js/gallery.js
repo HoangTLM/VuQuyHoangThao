@@ -31,7 +31,7 @@ function closeLightbox() {
   if (!modal) return;
   modal.classList.add("hidden");
   modal.classList.remove("flex");
-  document.body.style.overflow = "auto";
+  document.body.style.removeProperty("overflow");
 }
 
 function nextLightboxImage() {

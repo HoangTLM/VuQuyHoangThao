@@ -103,7 +103,11 @@ function initMusicAndEnvelope() {
 
       setTimeout(() => {
         envelopeScreen.classList.add("opened");
-        document.body.style.overflow = "auto";
+        document.body.style.removeProperty("overflow");
+        // Hoàn toàn ẩn khỏi render tree sau khi trượt xong để giải phóng hit-testing trên iOS Safari
+        setTimeout(() => {
+          envelopeScreen.style.display = "none";
+        }, 950);
         // Refresh AOS sau khi phong bì mở
         if (window.AOS) {
           window.AOS.refresh();

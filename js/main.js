@@ -181,18 +181,41 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
   }
 
-  // 7. THANH TIẾN TRÌNH CUỘN TRANG (SCROLL PROGRESS BAR)
+  // 7. THANH TIẾN TRÌNH CUỘN TRANG (SCROLL PROGRESS BAR - TỐI ƯU HIỆU NĂNG CHO IOS SAFARI)
   const progressBar = document.getElementById("scroll-progress-bar");
-  window.addEventListener("scroll", () => {
-    if (!progressBar) return;
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    if (scrollHeight <= 0) return;
-    const progress = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
-    progressBar.style.width = `${progress}%`;
+  if (progressBar) {
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          if (scrollHeight > 0) {
+            const progress = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
+            progressBar.style.width = `${progress}%`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // 8. CUỘN MƯỢT KHI BẤM NÚT LIÊN KẾT ANCHOR (TRÁNH DÙNG SCROLL-BEHAVIOR TRÊN ROOT HTML GÂY ĐƠ SAFARI)
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+      const targetId = this.getAttribute("href");
+      if (targetId && targetId !== "#") {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    });
   });
 
-  // 8. KHỞI TẠO AOS & ICONS
+  // 9. KHỞI TẠO AOS & ICONS
   if (window.AOS) {
     window.AOS.init({
       duration: 800,

@@ -123,7 +123,14 @@ Mọi thông tin hiển thị trên web đều được đọc từ biến toàn
    - Tên Cô Dâu & Chú Rể dùng `flex-col sm:flex-row`: hiển thị **3 dòng trên điện thoại** (Cô dâu / `&` / Chú rể) và **1 dòng trên máy tính** để không bị rớt chữ lẻ.
    - Nội dung chữ ở Hero Banner được đặt ở đáy (`justify-end`) để **không che khuôn mặt cô dâu chú rể** trên ảnh nền.
    - Ảnh đại diện tròn được canh `object-position` riêng (`center 20%` cho cô dâu, `center top` cho chú rể) để không bị cắt phần đầu.
-   - Mọi hiệu ứng AOS đều dùng `fade-up` hoặc `zoom-in` với `once: true` kết hợp `overflow-x: hidden !important` / `overflow-x: clip` trên `html, body, section` để **tuyệt đối không bị lỗi thanh cuộn ngang trên điện thoại**.
+   - Mọi hiệu ứng AOS đều dùng `fade-up` hoặc `zoom-in` với `once: true`.
+   - **Xử lý triệt để lỗi đứng/khựng scroll trên iOS Safari khi dừng ngón tay:** 
+     + Tách biệt: không đặt `scroll-behavior: smooth` trên root `html` ở màn hình mobile (chỉ bật trên desktop `min-width: 768px`), dùng JS cuộn mượt riêng khi bấm nút anchor.
+     + Không dùng `-webkit-overflow-scrolling: touch` trên `body` và không dùng `overflow-x: clip` trên `section`.
+     + Mở khóa body scroll bằng `removeProperty("overflow")` (tuyệt đối không gán `body.style.overflow = "auto"` inline vì gây kẹt dual-scroller trên Safari).
+     + Ẩn hoàn toàn `#envelope-screen` (`display: none`, `visibility: hidden`) sau khi mở để giải phóng GPU và hit-testing.
+     + Canvas trái tim `#petals-canvas` hạ `z-index: 1` kèm `touch-action: none; pointer-events: none` để không đè lên lớp chạm lướt.
+     + Lắng nghe sự kiện `scroll` với `{ passive: true }` và `requestAnimationFrame` giúp duy trì 120Hz mượt mà.
 5. **Phần Mừng Cưới Online (QR Ngân Hàng):**
    - Dữ liệu `bankAccounts` trong `js/config.js` và logic render `#bank-accounts-container` trong `js/main.js` vẫn được giữ sẵn, nhưng thẻ HTML hiển thị trong `index.html` đã được **lược bỏ có chủ đích**. Nếu sau này cần bật lại chỉ cần thêm `<div id="bank-accounts-container"></div>` vào `index.html`.
 6. **Bảo mật Firebase trên GitHub Pages:**
