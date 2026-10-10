@@ -207,15 +207,16 @@ function initRsvpAndGuestbook() {
 
   function renderWishes() {
     if (!wishesListContainer) return;
-    const seedWishes = window.WEDDING_CONFIG?.initialWishes || [];
 
-    // Kết hợp lời chúc từ Firestore (hoặc LocalStorage nếu chưa bật Firestore) + lời chúc mẫu
-    let combined = [];
-    if (firestoreWishes.length > 0) {
-      combined = [...firestoreWishes, ...seedWishes];
-    } else {
-      const localOnly = getLocalWishes();
-      combined = localOnly.length > 0 ? localOnly : seedWishes;
+    const combined = isFirebaseReady ? firestoreWishes : getLocalWishes();
+
+    if (combined.length === 0) {
+      wishesListContainer.innerHTML = `
+        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 border border-sky-100/80 text-center text-neutral-500 text-sm italic">
+          Hãy là người đầu tiên gửi lời chúc phúc ngọt ngào đến Vi Thảo & Minh Hoàng nhé! 💕
+        </div>
+      `;
+      return;
     }
 
     wishesListContainer.innerHTML = combined
@@ -245,6 +246,9 @@ function initRsvpAndGuestbook() {
 
   // Lắng nghe dữ liệu lời chúc thời gian thực từ Cloud Firestore
   if (isFirebaseReady && db) {
+    try {
+      localStorage.removeItem("wedding_wishes_list");
+    } catch (e) {}
     db.collection("wishes")
       .orderBy("createdAt", "desc")
       .limit(100)

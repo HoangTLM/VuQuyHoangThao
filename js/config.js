@@ -269,23 +269,7 @@ window.WEDDING_CONFIG = {
   },
 
   // 10. LỜI CHÚC MẪU BAN ĐẦU (GUESTBOOK SEED)
-  initialWishes: [
-    {
-      name: "Anh Tuấn & Chị Ngọc",
-      message: "Chúc hai em trăm năm hạnh phúc, đầu bạc răng long, sớm có tin vui nhé!",
-      time: "2 giờ trước"
-    },
-    {
-      name: "Nhóm Bạn Thân Đại Học",
-      message: "Mừng ngày chú rể đẹp trai nhất nhóm đã tìm thấy một nửa tuyệt vời của đời mình! Chúc hai bạn mãi ngọt ngào như ngày đầu!",
-      time: "5 giờ trước"
-    },
-    {
-      name: "Bé Mai (Em họ)",
-      message: "Chúc anh chị của em luôn yêu thương và cùng nhau xây đắp tổ ấm thật ấm áp và hạnh phúc ạ!",
-      time: "1 ngày trước"
-    }
-  ],
+  initialWishes: [],
 
   // 11. CẤU HÌNH FIREBASE (LƯU TRỮ RSVP & SỔ LƯU BÚT LỜI CHÚC TRÊN CLOUD FIRESTORE)
   firebaseConfig: {
