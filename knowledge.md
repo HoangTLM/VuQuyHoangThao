@@ -67,7 +67,7 @@ Mọi thông tin hiển thị trên web đều được đọc từ biến toàn
   1. Nhãn trên phong bì mở đầu (`#envelope-guest-name`): *"Kính gửi: [Tên khách]"*.
   2. Nhãn trên Hero Banner (`#personalized-guest-name`): *"Trân trọng kính mời: [Tên khách]"*.
   3. Điền sẵn vào ô Họ và Tên trong form RSVP (`#rsvp-name`).
-- **Modal Tạo Link Mời Nhanh (`#link-generator-modal`):** Nút ở cuối trang (Footer) giúp dâu rể nhập tên khách -> tự động sinh link `?to=...` và câu mẫu lời mời để copy gửi Zalo/Messenger.
+- **Tab Tạo Link Mời Nhanh (`#admin-linkgen-panel`):** Đã được ẩn khỏi Footer bên ngoài và tích hợp thành Tab thứ 3 bên trong Bảng Quản Trị Dâu Rể (`#admin-modal`) để khách mời không nhìn thấy.
 
 ### 3.3. Hiệu ứng Phong bì & Nhạc nền (`js/music.js`)
 - Khi người dùng mới vào trang, màn hình `#envelope-screen` che toàn bộ trang.
@@ -85,11 +85,11 @@ Mọi thông tin hiển thị trên web đều được đọc từ biến toàn
 ### 3.5. RSVP, Sổ Lưu Bút Realtime & Bảng Quản Trị Firebase (`js/rsvp.js`)
 - **Cloud Firestore (`thiepcuoi-e5dca`):** Nhúng qua Firebase Compat CDN (`firebase-app-compat.js` & `firebase-firestore-compat.js`) để giữ nguyên cấu trúc web tĩnh trên GitHub Pages.
 - **Form RSVP (`#rsvp-form`):** Lưu vào Collection `rsvps` trên Firestore (kèm dự phòng `localStorage`), bắn pháo hoa `triggerConfetti()` và hiện `showToast()`.
-- **Form Lời chúc (`#wish-form`):** Lưu vào Collection `wishes` trên Firestore, lắng nghe thời gian thực qua `onSnapshot` để hiển thị lời chúc mới ngay lập tức trên `#wishes-list` (kết hợp cùng 3 lời chúc mẫu `initialWishes`).
-- **Bảng Quản Trị Dâu Rể (`#admin-modal`):**
-  - Mở bằng nút **"📊 Quản Lý RSVP & Lời Chúc"** ở Footer hoặc truy cập đường dẫn `?admin=1`.
+- **Form Lời chúc (`#wish-form`):** Lưu vào Collection `wishes` trên Firestore, lắng nghe thời gian thực qua `onSnapshot` để hiển thị lời chúc mới ngay lập tức trên `#wishes-list` (đã xóa toàn bộ lời chúc mẫu mặc định).
+- **Bảng Quản Trị Dâu Rể (`#admin-modal` - Ẩn hoàn toàn khỏi giao diện khách mời):**
+  - **Cách mở:** Truy cập đường dẫn có đuôi `?admin=1` (hoặc `#admin`), hoặc **chạm 3 lần liên tiếp** vào dòng bản quyền `© 2026 Thiệp Cưới Online • Thiết kế bởi HoangTLM` ở cuối trang.
   - Bảo vệ bằng mã PIN (mặc định `adminPin: "241026"` trong `js/config.js`).
-  - Thống kê trực tiếp: Tổng số người tham dự, số lượt xác nhận, phân bổ Nhà Gái / Nhà Trai, danh sách lời chúc, bộ lọc nhanh và nút **Xuất Excel (CSV)** chuẩn tiếng Việt (UTF-8 BOM).
+  - Gồm 3 tab: **Danh Sách RSVP** (có bộ lọc & nút Xóa), **Sổ Lưu Bút Lời Chúc** (có nút Xóa), và **💌 Tạo Link Gửi Khách**, kèm nút **Xuất Excel (CSV)** chuẩn tiếng Việt (UTF-8 BOM).
 
 ---
 

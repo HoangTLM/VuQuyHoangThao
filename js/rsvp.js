@@ -38,7 +38,7 @@ function showToast(message) {
   toast.className = "toast";
   toast.innerHTML = `
     <svg class="w-5 h-5 text-sky-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
     </svg>
     <span>${escapeHtml(message)}</span>
   `;
@@ -111,9 +111,28 @@ function initRsvpAndGuestbook() {
   const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("u") || urlParams.get("k");
   const prefilledName = guestParam ? decodeURIComponent(guestParam).replace(/\+/g, " ").trim() : "";
 
-  // Mở nhanh modal Admin nếu trên URL có ?admin=1
-  if (urlParams.get("admin") === "1") {
+  // Mở nhanh modal Admin nếu trên URL có ?admin=1, ?admin hoặc #admin
+  if (urlParams.has("admin") || window.location.hash === "#admin") {
     setTimeout(() => openAdminModal(), 500);
+  }
+
+  // Mở ẩn bảng Admin khi dâu rể chạm 3 lần liên tiếp vào dòng bản quyền cuối trang
+  const footerCopyright = document.getElementById("footer-copyright");
+  if (footerCopyright) {
+    let tapCount = 0;
+    let tapTimer = null;
+    footerCopyright.addEventListener("click", () => {
+      tapCount++;
+      clearTimeout(tapTimer);
+      if (tapCount >= 3) {
+        tapCount = 0;
+        openAdminModal();
+      } else {
+        tapTimer = setTimeout(() => {
+          tapCount = 0;
+        }, 600);
+      }
+    });
   }
 
   // --------------------------------------------------------------------------
