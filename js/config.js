@@ -285,5 +285,19 @@ window.WEDDING_CONFIG = {
       message: "Chúc anh chị của em luôn yêu thương và cùng nhau xây đắp tổ ấm thật ấm áp và hạnh phúc ạ!",
       time: "1 ngày trước"
     }
-  ]
+  ],
+
+  // 11. CẤU HÌNH FIREBASE (LƯU TRỮ RSVP & SỔ LƯU BÚT LỜI CHÚC TRÊN CLOUD FIRESTORE)
+  firebaseConfig: {
+    apiKey: "AIzaSyAkUZe-ImZdJwHPuB0XpjncNpWFSwIqyOM",
+    authDomain: "thiepcuoi-e5dca.firebaseapp.com",
+    projectId: "thiepcuoi-e5dca",
+    storageBucket: "thiepcuoi-e5dca.firebasestorage.app",
+    messagingSenderId: "310016649858",
+    appId: "1:310016649858:web:d215b939e4cbc0d942229b",
+    measurementId: "G-1C315VVB0P"
+  },
+
+  // Mã PIN mở bảng Quản trị (Admin) xem danh sách khách mời & xuất Excel ngay trên web
+  adminPin: "241026"
 };
